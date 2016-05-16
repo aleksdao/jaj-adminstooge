@@ -15,23 +15,24 @@ server.listen(3000, function(){
 });
 
 /// SETUP ROUTES ///
-app.use('/node_modules', express.static(path.join(__dirname, './node_modules')));
+app.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
 
-app.use('/', express.static(path.join(__dirname, './public')));
+app.use('/admin', require('./routes/admin.routes'));
 
+//app.use('/', express.static(path.join(__dirname, './public')));
+
+/// MAIN ROUTE ///
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/change_color.html');
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-/// SOCKET IO HANDLING /// 
-
+/// SOCKET IO HANDLER ///
 io.on('connection', function (socket) {
-
   console.log('user connected');
+  io.emit('hello', 'yo yo oy y o');
 
 });
+
 io.on('disconnect', function (socket) {
-
   console.log('user disconnnected');
-
 });

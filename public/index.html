@@ -1,0 +1,38 @@
+<html lang="en">
+
+<head>
+    <title> Welcome to the Show </title>
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+    <script src="/socket.io/socket.io.js"></script>
+
+</head>
+
+<body id="main">
+     <div class="container">
+        <h1>Client Test</h1>
+    </div>
+</body>
+
+
+<script>
+    //connect to socket server
+    var socket = io.connect();
+
+    socket.on("hello",function(data) {
+        print('Event:' + data);
+        console.log(data)
+    });
+
+    function print(text){
+
+      var para = document.createElement("p");
+      var node = document.createTextNode(text);
+      para.appendChild(node);
+
+      var element = document.getElementById("main");
+      element.appendChild(para);
+    }
+</script>
+
+
+</html>
