@@ -1,0 +1,19 @@
+{
+  "name": "capstone-admin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aleksdao/jaj-adminstooge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aleksdao/jaj-adminstooge/issues"
+  },
+  "homepage": "https://github.com/aleksdao/jaj-adminstooge#readme"
+}
