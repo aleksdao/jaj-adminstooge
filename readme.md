@@ -1,1 +1,1 @@
-JAJ-Capstone Admin App 
+JAJ-Capstone Admin App
