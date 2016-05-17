@@ -1,37 +1,43 @@
 <html lang="en">
 
 <head>
-    <title> Welcome to the Show </title>
+    <title> Welcome to the Admin Panel</title>
     <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/node_modules/angular/angular.js" defer></script>
+    <script src="/js/app.js" defer></script>
 
 </head>
 
-<body id="main">
+<body ng-app="jaj-admin" ng-controller="HomeCtrl" id="main">
      <div class="container">
-        <h1>Client Test</h1>
+        <h1>Admin Test</h1>
+
+        <div class="col-sm-6">
+          <h3> Send a message</h3>
+          <div class="input-group">
+            <span class="input-group-addon">Message Type</span>
+            <input ng-model="event.type" type="text" class="form-control">
+          </div>
+
+          <div class="input-group">
+              <input ng-model="event.key" type="text" class="form-control" placeholder="Key"/>
+              <span class="input-group-addon">-</span>
+              <input ng-model="event.value"type="text" class="form-control" placeholder="Value"/>
+          </div>
+          <br/>
+          <button ng-click="sendMessage()"class="btn btn-primary"> Emit </button>
+
+          {{ event }}
+        </div>
+
+
     </div>
 </body>
 
 
 <script>
     //connect to socket server
-    var socket = io.connect();
-
-    socket.on("hello",function(data) {
-        print('Event:' + data);
-        console.log(data)
-    });
-
-    function print(text){
-
-      var para = document.createElement("p");
-      var node = document.createTextNode(text);
-      para.appendChild(node);
-
-      var element = document.getElementById("main");
-      element.appendChild(para);
-    }
 </script>
 
 
