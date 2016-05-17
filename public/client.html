@@ -1,0 +1,26 @@
+<html lang="en">
+
+<head>
+    <title> Welcome to the Client Panel</title>
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/node_modules/angular/angular.js" defer></script>
+    <script src="/js/app.js" defer></script>
+
+</head>
+
+<body ng-app="jaj-admin" ng-controller="HomeCtrl" id="main">
+    <div class="container">
+        <h1>Client Test</h1>
+
+        <div class="col-sm-6">
+            <h3> Message Log </h3>
+            <ul>
+                <li ng-repeat="msg in msgLog track by $index"> {{ msg }} </li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+
+</html>
