@@ -22,8 +22,6 @@ server.listen(3000, function(){
 app.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));
 
-app.use('/admin', require('./routes/admin.routes'));
-
 /// MAIN ROUTE ///
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, '../public/index.html'));
@@ -37,12 +35,13 @@ io.on('connect', function(socket){
     console.log('user disconnected');
   });
 
-
   /// ADMIN BROADCAST ///
   socket.on('admin broadcast', function(msgToSend){
+
+    //echo message to all users
+    console.log('sending admin msg');
     io.emit(msgToSend.type, msgToSend.eventData);
   });
-
 
 });
 
