@@ -2,34 +2,39 @@
 
 <head>
     <title> Welcome to the Admin Panel</title>
-    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css">
+
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="/node_modules/angular/angular.js" defer></script>
+    <script src="/node_modules/angular-aria/angular-aria.js" defer></script>
+    <script src="/node_modules/angular-animate/angular-animate.js" defer></script>
+    <script src="/node_modules/angular-material/angular-material.js" defer></script>
 
     <script src="/js/app.js" defer></script>
     <script src="/js/socketserver/socket.factory.js" defer></script>
 </head>
 
 <body ng-app="jaj-admin" ng-controller="HomeCtrl" id="main">
-    <div class="container">
-        <h1>Admin Test</h1>
+  <div layout="column" class="zero">
+        <h1 class="md-display-3">Admin</h1>
 
-        <div class="col-sm-3">
+        <div flex>
             <h3> Send a message</h3>
-            <div class="input-group">
-                <span class="input-group-addon">Message Type</span>
-                <input ng-model="event.type" type="text" class="form-control">
-            </div>
+            <md-input-container>
+                <label>Message Type</label>
+                <input ng-model="event.type" type="text">
+            </md-input-container>
 
-            <div class="input-group">
-                <input ng-model="event.key" type="text" class="form-control" placeholder="Key" />
-                <span class="input-group-addon">-</span>
-                <input ng-model="event.value" type="text" class="form-control" placeholder="Value" />
-            </div>
+            <md-input-container>
+                <input ng-model="event.key" type="text" placeholder="Key" />
+            </md-input-container>
+            <md-input-container>
+                <input ng-model="event.value" type="text"placeholder="Value" />
+            </md-input-container>
+
             <br/>
-            <button ng-click="sendMessage()" class="btn btn-primary"> Emit </button>
-        </div>
-        <div class="col-sm-3"></div>
+            <md-button ng-click="sendMessage()" > Emit </md-button>
+
         <div class="col-sm-6">
             <h3> Message Log </h3>
             <ul>

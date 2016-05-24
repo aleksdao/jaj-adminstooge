@@ -1,4 +1,4 @@
-var app = angular.module('jaj-admin', []);
+var app = angular.module('jaj-admin', ['ngMaterial']);
 
 app.run(function(socket){
 
