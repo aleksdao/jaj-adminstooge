@@ -5,8 +5,9 @@
     <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="/node_modules/angular/angular.js" defer></script>
-    <script src="/js/app.js" defer></script>
 
+    <script src="/js/app.js" defer></script>
+    <script src="/js/socketserver/socket.factory.js" defer></script>
 </head>
 
 <body ng-app="jaj-admin" ng-controller="HomeCtrl" id="main">
@@ -33,6 +34,12 @@
             <h3> Message Log </h3>
             <ul>
                 <li ng-repeat="msg in msgLog track by $index"> {{ msg }} </li>
+            </ul>
+
+            <h3> Client List </h3>
+            {{ clientList.length }} clients connected
+            <ul>
+                <li ng-repeat="client in clientList track by $index"> {{ client.name }} </li>
             </ul>
         </div>
 
