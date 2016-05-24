@@ -27,18 +27,17 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-app.get('/client', function (req, res) {
-  res.sendFile(path.join(__dirname, '../public/client.html'));
-});
+// app.get('/client', function (req, res) {
+//   res.sendFile(path.join(__dirname, '../public/client.html'));
+// });
 
 ///SOCKET IO EVENTS ///
 var adminUser; //stores socket ID for admin
 var users = [];
 
 io.on('connection', function(socket){
-  var addedUser = false;
 
-  console.log('user connected');
+  var addedUser = false; //has this user connected before?
 
   socket.on('add user', function(name){
 
@@ -46,42 +45,43 @@ io.on('connection', function(socket){
       return;
 
     addedUser = true;
-    users.push({name: name, id: socket.id});
+    users.push({name: name, id: socket.id}); //add to list of users
 
-    io.to(adminUser).emit('admin updated client list', users);
+    io.to(adminUser).emit('admin updated client list', users); //send list to Admin user
 
   });
 
   /// CHECK FOR ADMIN ///
   socket.on('admin connected', function(){
 
-    if(adminUser)
+    if(adminUser) //we can only have one admin user at a time
       return;
 
     adminUser = socket.id;
 
-    io.to(adminUser).emit('welcome admin', 'for your eyes only');
+    io.to(adminUser).emit('welcome admin', 'for your eyes only'); //send welcome message to admin
 
   });
 
   /// CLIENT DISCONNECT ///
   socket.on('disconnect', function(){
-    console.log('user disconnected');
 
     if(addedUser){
 
+      //find and remove user from list
       var idx = users.findIndex(function(user){
         return user.id == socket.id;
       });
 
       users.splice(idx, 1);
 
+      //send updated list to admin
       io.to(adminUser).emit('admin updated client list', users);
-
-      console.log('users left', users.length, users);
 
     }
 
+    //if this was the admin somehow leaving, null the adminUser ID
+    //TODO: make the 'socketsever' able to be turned on and off in the front end
     if(socket.id === adminUser)
       adminUser = null;
 
@@ -96,5 +96,3 @@ io.on('connection', function(socket){
   });
 
 });
-
-/// SOCKET IO HANDLER ///
