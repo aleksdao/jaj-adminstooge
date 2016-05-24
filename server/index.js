@@ -32,13 +32,59 @@ app.get('/client', function (req, res) {
 });
 
 ///SOCKET IO EVENTS ///
+var adminUser; //stores socket ID for admin
+var users = [];
 
-io.on('connect', function(socket){
+io.on('connection', function(socket){
+  var addedUser = false;
+
   console.log('user connected');
+
+  socket.on('add user', function(name){
+
+    if(addedUser)
+      return;
+
+    addedUser = true;
+    users.push({name: name, id: socket.id});
+
+    io.to(adminUser).emit('admin updated client list', users);
+
+  });
+
+  /// CHECK FOR ADMIN ///
+  socket.on('admin connected', function(){
+
+    if(adminUser)
+      return;
+
+    adminUser = socket.id;
+
+    io.to(adminUser).emit('welcome admin', 'for your eyes only');
+
+  });
 
   /// CLIENT DISCONNECT ///
   socket.on('disconnect', function(){
     console.log('user disconnected');
+
+    if(addedUser){
+
+      var idx = users.findIndex(function(user){
+        return user.id == socket.id;
+      });
+
+      users.splice(idx, 1);
+
+      io.to(adminUser).emit('admin updated client list', users);
+
+      console.log('users left', users.length, users);
+
+    }
+
+    if(socket.id === adminUser)
+      adminUser = null;
+
   });
 
   /// ADMIN BROADCAST ///
