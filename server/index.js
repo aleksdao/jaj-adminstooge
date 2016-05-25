@@ -4,6 +4,7 @@ var app = express();
 
 /// SETUP SERVER ///
 var server = require('http').Server(app);
+
 var io = require('socket.io')(server);
 
 /// LOAD HELPER MODEULES ///
@@ -21,10 +22,17 @@ server.listen(3000, function(){
 /// SETUP ROUTES ///
 app.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));
+app.use('/stylesheets', express.static(path.join(__dirname, '../public/stylesheets')));
+
+
+/// MAIN ROUTE ///
+app.get('/admin', function (req, res) {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
 
 /// MAIN ROUTE ///
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.send('go away');
 });
 
 // app.get('/client', function (req, res) {
