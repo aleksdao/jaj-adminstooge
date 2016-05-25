@@ -2,48 +2,29 @@
 
 <head>
     <title> Welcome to the Admin Panel</title>
-    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="/node_modules/angular/angular.js" defer></script>
+    <script src="/node_modules/angular-ui-router/release/angular-ui-router.min.js" defer></script>
+
+    <script src="/node_modules/angular-aria/angular-aria.js" defer></script>
+    <script src="/node_modules/angular-animate/angular-animate.js" defer></script>
+    <script src="/node_modules/angular-material/angular-material.js" defer></script>
 
     <script src="/js/app.js" defer></script>
     <script src="/js/socketserver/socket.factory.js" defer></script>
+    <script src="/js/home/home.js" defer></script>
+
+
+    <base href="/">
 </head>
 
-<body ng-app="jaj-admin" ng-controller="HomeCtrl" id="main">
-    <div class="container">
-        <h1>Admin Test</h1>
+<body ng-app="jaj-admin" id="main">
 
-        <div class="col-sm-3">
-            <h3> Send a message</h3>
-            <div class="input-group">
-                <span class="input-group-addon">Message Type</span>
-                <input ng-model="event.type" type="text" class="form-control">
-            </div>
+  <ui-view></ui-view>
 
-            <div class="input-group">
-                <input ng-model="event.key" type="text" class="form-control" placeholder="Key" />
-                <span class="input-group-addon">-</span>
-                <input ng-model="event.value" type="text" class="form-control" placeholder="Value" />
-            </div>
-            <br/>
-            <button ng-click="sendMessage()" class="btn btn-primary"> Emit </button>
-        </div>
-        <div class="col-sm-3"></div>
-        <div class="col-sm-6">
-            <h3> Message Log </h3>
-            <ul>
-                <li ng-repeat="msg in msgLog track by $index"> {{ msg }} </li>
-            </ul>
-
-            <h3> Client List </h3>
-            {{ clientList.length }} clients connected
-            <ul>
-                <li ng-repeat="client in clientList track by $index"> {{ client.name }} </li>
-            </ul>
-        </div>
-
-    </div>
 </body>
 
 </html>

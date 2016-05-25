@@ -1,0 +1,15 @@
+
+  <h3> Send a message</h3>
+  <md-input-container>
+      <label>Message Type</label>
+      <input ng-model="event.type" type="text">
+  </md-input-container>
+  <md-input-container>
+      <input ng-model="event.key" type="text" placeholder="Key" />
+  </md-input-container>
+  <md-input-container>
+      <input ng-model="event.value" type="text" placeholder="Value" />
+  </md-input-container>
+
+  <br/>
+  <md-button ng-click="sendMessage()"> Emit </md-button>
