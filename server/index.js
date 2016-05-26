@@ -45,9 +45,8 @@ app.get('/', function (req, res) {
 
 ///SOCKET IO EVENTS ///
 var MAX_ADMIN = 1;
-var MAX_CLIENTS = 10000;
 
-var userList = new SocketList(MAX_CLIENTS);
+var userList = new SocketList();
 var adminList = new SocketList(MAX_ADMIN);
 
 /// SETUP ADMIN SOCKET ///

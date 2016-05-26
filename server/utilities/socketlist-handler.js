@@ -5,16 +5,12 @@ function SocketList(maxConnections){
 
 SocketList.prototype.addUser = function(socketId, data){
 
-  console.log('trying to add user', socketId);
-
   if(!this.inList(socketId) && this._socketList.length <= this.maxConnections){
     this._socketList.push({id: socketId, userData: data});
-    console.log('list updated', this._socketList);
     return true;
   }
   else
     return false;
-
 };
 
 SocketList.prototype.removeUser = function(socketId){
