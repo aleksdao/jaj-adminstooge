@@ -10,7 +10,7 @@ app.factory('socket', function($rootScope){
   return {
 
     initAdminSocket: function(){
-      socket.emit('add user', 'Admin Dude');
+      socket.emit('add admin', 'Admin Dude');
     },
     on: function (eventName, callback) {
       socket.on(eventName, function () {

@@ -55,7 +55,7 @@ adminNsp.on('connection', function(socket){
   console.log('admin connected');
 
 
-  socket.on('add user', function(userData){
+  socket.on('add admin', function(userData){
 
     var result = adminList.addUser(socket.id, userData);
 

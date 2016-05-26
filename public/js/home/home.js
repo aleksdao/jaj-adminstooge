@@ -10,26 +10,39 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.config(function ($stateProvider) {
-    $stateProvider.state('home.oneshot', {
-        url: '/',
-        templateUrl: '/js/home/home.oneshot.html',
-        resolve: {
-
-        },
-        controller: 'HomeOneShotCtrl'
-    });
+/// HOME DIRECTIVES ///
+app.directive('actionControl', function(){
+  return {
+    restrict: 'E',
+    templateUrl: '/js/home/home.action.html',
+  };
 });
 
-app.config(function ($stateProvider) {
-    $stateProvider.state('home.sequence', {
-        url: '/',
-        templateUrl: '/js/home/home.sequence.html',
-        resolve: {
+app.directive('serverStats', function(){
+  return {
+    restrict: 'E',
+    templateUrl: '/js/home/home.serverstats.html',
+    controller: 'ServerStatsCtrl'
+  };
+});
 
-        },
-        controller: 'HomeSequenceCtrl'
-    });
+app.directive('actionOneshot', function(){
+
+  return {
+    restrict: 'E',
+    controller:'HomeOneShotCtrl',
+    templateUrl: '/js/home/home.oneshot.html',
+  };
+
+});
+
+app.directive('actionSequence', function(){
+
+  return {
+    restrict: 'E',
+    controller:'HomeSequenceCtrl',
+    templateUrl: '/js/home/home.sequence.html',
+  };
 });
 
 /// HOME CONTROLLERS ///
@@ -53,6 +66,11 @@ app.controller('HomeCtrl', function($scope, socket){
   $scope.$on('$destroy', function (event) {
     socket.cleanup();
   });
+
+});
+
+app.controller('ServerStatsCtrl', function($scope){
+  $scope.isActive = true;
 
 });
 
