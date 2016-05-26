@@ -7,9 +7,13 @@ var server = require('http').Server(app);
 
 var io = require('socket.io')(server);
 
+var clientNsp = io.of('/client');
+var adminNsp = io.of('/admin');
+
 /// LOAD HELPER MODEULES ///
 var bodyParser = require('body-parser');
 var path = require('path');
+var SocketList = require('utilities/socketlist-handler');
 
 /// SETUP MIDDLEWARE ///
 app.use(bodyParser.json()); // for parsing application/json
@@ -32,7 +36,7 @@ app.get('/admin', function (req, res) {
 
 /// MAIN ROUTE ///
 app.get('/', function (req, res) {
-  res.send('go away');
+  res.sendFile(path.join(__dirname, '../public/client.html'));
 });
 
 // app.get('/client', function (req, res) {
@@ -40,67 +44,49 @@ app.get('/', function (req, res) {
 // });
 
 ///SOCKET IO EVENTS ///
-var adminUser; //stores socket ID for admin
-var users = [];
+var MAX_ADMIN = 1;
 
-io.on('connection', function(socket){
+var userlist = new SocketList();
+var adminList = new SocketList(MAX_ADMIN);
 
-  var addedUser = false; //has this user connected before?
+/// SETUP ADMIN SOCKET ///
+adminNsp.on('connection', function(socket){
 
-  socket.on('add user', function(name){
+  socket.on('add user', function(userData){
 
-    if(addedUser)
-      return;
+    var result = adminList.addUser(socket.id, userData);
 
-    addedUser = true;
-    users.push({name: name, id: socket.id}); //add to list of users
-
-    io.to(adminUser).emit('admin updated client list', users); //send list to Admin user
-
-  });
-
-  /// CHECK FOR ADMIN ///
-  socket.on('admin connected', function(){
-
-    if(adminUser) //we can only have one admin user at a time
-      return;
-
-    adminUser = socket.id;
-
-    io.to(adminUser).emit('welcome admin', 'for your eyes only'); //send welcome message to admin
-
-  });
-
-  /// CLIENT DISCONNECT ///
-  socket.on('disconnect', function(){
-
-    if(addedUser){
-
-      //find and remove user from list
-      var idx = users.findIndex(function(user){
-        return user.id == socket.id;
-      });
-
-      users.splice(idx, 1);
-
-      //send updated list to admin
-      io.to(adminUser).emit('admin updated client list', users);
-
+    if(result){
+      adminNsp.emit('welcome', 'you are now an admin');
+    } else {
+      adminNsp.emit('welcome', 'max number of admins already connected');
+      socket.disconnect();
     }
+  });
 
-    //if this was the admin somehow leaving, null the adminUser ID
-    //TODO: make the 'socketsever' able to be turned on and off in the front end
-    if(socket.id === adminUser)
-      adminUser = null;
+  socket.on('disconnect', function(){
+    adminList.removeUser(socket.id);
+  });
+
+});
+
+/// SETUP CLIENT SOCKETS ///
+
+clientNsp.on('connection', function(socket){
+
+  socket.on('add user', function(userData){
+    userList.addUser(socket.id, userData);
+    clientNsp.emit('welcome');
+
+    //let the admin know!
+    adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
 
   });
 
-  /// ADMIN BROADCAST ///
-  socket.on('admin broadcast', function(msgToSend){
+  socket.on('disconnect', function(){
+    userList.removeUser(socket.id);
+    adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
 
-    //echo message to all users
-    console.log('sending admin msg');
-    io.emit(msgToSend.type, msgToSend.eventData);
   });
 
 });
