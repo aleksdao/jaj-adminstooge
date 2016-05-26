@@ -3,32 +3,13 @@
 <div layout="row">
 
   <div flex="66">
-    <h1 class="md-display-1">Actions</h1>
-    <a ui-sref="home.oneshot" class="md-headline">One-Shot</a>
-    <a ui-sref="home.sequence" class="md-headline">Sequence</a>
-
-    <ui-view></ui-view>
+    <action-control></action-control>
   </div>
 
   <div flex="33">
-    <h1 class="md-display-2">Stats</h1>
+    <server-stats></server-stats>
 
-    <div flex>
-
-      <h3> Client List </h3> {{ clientList.length }} clients connected
-      <ul>
-          <li ng-repeat="client in clientList track by $index"> {{ client.name }} </li>
-      </ul>
-    </div>
-    <div flex>
-        <h3> Message Log </h3>
-        <ul>
-            <li ng-repeat="msg in msgLog track by $index"> {{ msg }} </li>
-        </ul>
-    </div>
   </div>
-
-</div>
 
 
 

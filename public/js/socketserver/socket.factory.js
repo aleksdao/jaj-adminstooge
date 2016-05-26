@@ -1,7 +1,7 @@
 app.factory('socket', function($rootScope){
 
   var adminStatus = false;
-  var socket = io.connect();
+  var socket = io.connect('/admin');
 
   socket.on("welcome admin", function(message){
     adminStatus = true;
@@ -10,8 +10,7 @@ app.factory('socket', function($rootScope){
   return {
 
     initAdminSocket: function(){
-      socket.emit('admin connected');
-      socket.emit('add user', 'Admin Dude');
+      socket.emit('add admin', 'Admin Dude');
     },
     on: function (eventName, callback) {
       socket.on(eventName, function () {
