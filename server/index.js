@@ -13,7 +13,7 @@ var adminNsp = io.of('/admin');
 /// LOAD HELPER MODEULES ///
 var bodyParser = require('body-parser');
 var path = require('path');
-var SocketList = require('utilities/socketlist-handler');
+var SocketList = require('./utilities/socketlist-handler');
 
 /// SETUP MIDDLEWARE ///
 app.use(bodyParser.json()); // for parsing application/json
@@ -45,12 +45,16 @@ app.get('/', function (req, res) {
 
 ///SOCKET IO EVENTS ///
 var MAX_ADMIN = 1;
+var MAX_CLIENTS = 10000;
 
-var userlist = new SocketList();
+var userList = new SocketList(MAX_CLIENTS);
 var adminList = new SocketList(MAX_ADMIN);
 
 /// SETUP ADMIN SOCKET ///
 adminNsp.on('connection', function(socket){
+
+  console.log('admin connected');
+
 
   socket.on('add user', function(userData){
 
@@ -74,6 +78,8 @@ adminNsp.on('connection', function(socket){
 
 clientNsp.on('connection', function(socket){
 
+  console.log('client connected');
+
   socket.on('add user', function(userData){
     userList.addUser(socket.id, userData);
     clientNsp.emit('welcome');
@@ -86,7 +92,6 @@ clientNsp.on('connection', function(socket){
   socket.on('disconnect', function(){
     userList.removeUser(socket.id);
     adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
-
   });
 
 });

@@ -1,5 +1,3 @@
 var socket = io.connect('/client');
 
-socket.on('go away', function(){
-  console.log('bye');
-});
+socket.emit('add user', {name: 'User' + Math.floor(Math.random()*1000)});
