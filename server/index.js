@@ -114,7 +114,6 @@ clientNsp.on('connection', function(socket){
 
   socket.on('remove user', function(){
     userList.removeUser(socket.id);
-    //socket.disconnect();
     adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
   });
 
