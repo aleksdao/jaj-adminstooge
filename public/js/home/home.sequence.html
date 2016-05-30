@@ -1,1 +1,20 @@
-<h3> Sequence</h3>
+<h1 class="md-title">Queue Sequence</h1>
+
+<md-input-container>
+  <label>Select sequence</label>
+  <md-select ng-model="data.sequence">
+    <md-option>
+    </md-option>
+  </md-select>
+</md-input-container>
+<p> Name: </p>
+<p> Length: </p>
+
+<md-input-container>
+    <label>Start Time (in seconds)</label>
+    <input ng-model="data.starTime" type="number">
+</md-input-container>
+<br/>
+<md-button ng-disabled="!data.starTime" class="md-fab">
+  <md-icon md-font-set="material-icons"> play_arrow </md-icon>
+</md-button>

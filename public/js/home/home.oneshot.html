@@ -1,14 +1,22 @@
-  <h3> Send a message</h3>
+  <h1 class="md-title">Send a message</h1>
+
   <md-input-container>
-      <label>Message Type</label>
-      <input ng-model="event.type" type="text">
-  </md-input-container>
-  <md-input-container>
-      <input ng-model="event.key" type="text" placeholder="Key" />
-  </md-input-container>
-  <md-input-container>
-      <input ng-model="event.value" type="text" placeholder="Value" />
+      <label>Message</label>
+      <input ng-model="data.message" type="text">
   </md-input-container>
 
+  <md-button class="md-fab">
+    <md-icon md-font-set="material-icons"> send </md-icon>
+  </md-button>
   <br/>
-  <md-button ng-click="sendMessage()"> Emit </md-button>
+
+  <h1 class="md-title">Request Photo</h1>
+
+  <md-input-container>
+      <label>Seconds to wait</label>
+      <input ng-model="data.photoWaitTime" type="number">
+  </md-input-container>
+
+  <md-button class="md-fab">
+    <md-icon md-font-set="material-icons"> camera_alt </md-icon>
+  </md-button>
