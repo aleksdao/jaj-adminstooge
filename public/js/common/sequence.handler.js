@@ -1,7 +1,12 @@
 app.factory('SequenceHandler', function(socket){
 
   var _sequence;
-  var _screenElement = {}; //used to store target DOM objects
+  var _screenElement = {
+    container: undefined,
+    title: undefined,
+    body: undefined
+  }; //used to store target DOM objects
+
   var _actionFunc = {
     changeColor: changeColor,
     fadeColor: fadeColor,
@@ -50,13 +55,13 @@ app.factory('SequenceHandler', function(socket){
       //play current events
       timeline.forEachAtTime(timelinePos, function(event) {
         if (!event.preload) {
-          var duration = (15 / show.settings.bpm) * 1000;
+          var duration = (15 / _sequence.getSettings().bpm) * 1000;
           _actionFunc[event.action](event.params, duration);
         }
       });
 
       //check for preloaded events
-      timeline.forEachAtTime(currPos + "+" + _sequence.getSettings.resolution, function(event) {
+      timeline.forEachAtTime(currPos + "+" + _sequence.getSettings().resolution, function(event) {
         if (event.preload) {
 
         }
@@ -66,6 +71,23 @@ app.factory('SequenceHandler', function(socket){
     }
   };
 });
+
+/////// Event Action Functions //////
+function changeColor(params){
+
+}
+function fadeColor(params, duration){
+
+}
+function changeText(params){
+
+}
+function vibrate(params){
+
+}
+function strobeFlash(params, duration){
+
+}
 
 /////// Sequence obj ///////
 function Sequence(sequence){
@@ -84,6 +106,6 @@ Sequence.prototype.generateTimeline = function(){
     });
 };
 
-Sequence.prototype.getSequenceSettings = function(){
+Sequence.prototype.getSettings = function(){
   return this._sequence.settings;
 };
