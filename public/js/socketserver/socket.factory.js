@@ -1,41 +1,60 @@
 app.factory('socket', function($rootScope){
 
-  var adminStatus = false;
-  var socket = io.connect();
-
-  socket.on("welcome admin", function(message){
-    adminStatus = true;
-  });
+  var _socket; //holds our Socket
+  var _serverLatency; //current roundtrip time to server
+  var _pingProcess;
 
   return {
 
-    initAdminSocket: function(){
-      socket.emit('admin connected');
-      socket.emit('add user', 'Admin Dude');
+    connect: function(serverUrl){
+      _socket = io.connect(serverUrl);
+      this.ping();
     },
     on: function (eventName, callback) {
-      socket.on(eventName, function () {
+      _socket.on(eventName, function () {
         var args = arguments;
         $rootScope.$apply(function () {
-          callback.apply(socket, args);
+          callback.apply(_socket, args);
         });
       });
     },
     emit: function (eventName, data, callback) {
-      socket.emit(eventName, data, function () {
+      _socket.emit(eventName, data, function () {
         var args = arguments;
         $rootScope.$apply(function () {
           if (callback) {
-            callback.apply(socket, args);
+            callback.apply(_socket, args);
           }
         });
       });
     },
     cleanup: function(){
-      socket.removeAllListeners();
+      _socket.removeAllListeners();
     },
-    isAdmin: function(){
-      return adminStatus;
+    ping: function(){
+      console.log('pinging');
+      _socket.emit('latency', Date.now(), function(startTime) {
+        _serverLatency = Date.now() - startTime;
+        console.log('result:', _serverLatency);
+      });
+
+    },
+    startPingRepeat: function(interval){
+
+      interval = interval || 10000; //if no interval is passed, set to 10 seconds
+
+      if(!_pingProcess)
+        _pingProcess = setInterval(this.ping, interval);
+
+    },
+    stopPingRepeat: function(){
+
+      clearInterval(_pingProcess);
+      _pingProcess = null;
+
+    },
+    getLatency: function(){
+      return _serverLatency;
     }
   };
 });
