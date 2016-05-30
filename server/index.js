@@ -90,6 +90,10 @@ adminNsp.on('connection', function(socket){
     adminList.removeUser(socket.id);
   });
 
+  socket.on('latency', function (startTime, cb) {
+    cb(startTime);
+  });
+
 });
 
 /// SETUP CLIENT SOCKETS ///
@@ -115,6 +119,10 @@ clientNsp.on('connection', function(socket){
   socket.on('remove user', function(){
     userList.removeUser(socket.id);
     adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
+  });
+
+  socket.on('latency', function (startTime, cb) {
+    cb(startTime);
   });
 
 });
