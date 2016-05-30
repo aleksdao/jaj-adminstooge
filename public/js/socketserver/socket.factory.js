@@ -8,6 +8,7 @@ app.factory('socket', function($rootScope){
 
     connect: function(serverUrl){
       _socket = io.connect(serverUrl);
+      this.ping();
     },
     on: function (eventName, callback) {
       _socket.on(eventName, function () {
@@ -31,9 +32,10 @@ app.factory('socket', function($rootScope){
       _socket.removeAllListeners();
     },
     ping: function(){
-
-      socket.emit('latency', Date.now(), function(startTime) {
+      console.log('pinging');
+      _socket.emit('latency', Date.now(), function(startTime) {
         _serverLatency = Date.now() - startTime;
+        console.log('result:', _serverLatency);
       });
 
     },
@@ -42,7 +44,7 @@ app.factory('socket', function($rootScope){
       interval = interval || 10000; //if no interval is passed, set to 10 seconds
 
       if(!_pingProcess)
-        _pingProcess = setInterval(ping, interval);
+        _pingProcess = setInterval(this.ping, interval);
 
     },
     stopPingRepeat: function(){
