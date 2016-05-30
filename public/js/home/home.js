@@ -69,8 +69,13 @@ app.controller('HomeCtrl', function($scope, socket){
 
 });
 
-app.controller('ServerStatsCtrl', function($scope){
-  $scope.isActive = true;
+app.controller('ServerStatsCtrl', function($scope, socket){
+  $scope.serverOnline = true;
+
+  $scope.toggleServerStatus = function(){
+    socket.emit('toggle online status');
+  };
+
 
 });
 

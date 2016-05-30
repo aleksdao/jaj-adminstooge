@@ -35,6 +35,10 @@ SocketList.prototype.getList = function(){
   return this._socketList;
 };
 
+SocketList.prototype.reset = function(socketList){
+  this._socketList = [];
+};
+
 
 
 module.exports = SocketList;

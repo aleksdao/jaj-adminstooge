@@ -19,7 +19,7 @@ var SocketList = require('./utilities/socketlist-handler');
 app.use(bodyParser.json()); // for parsing application/json
 
 /// START SERVER ///
-server.listen(3000, function(){
+server.listen(3001, function(){
   console.log('listening on port 3000');
 });
 
@@ -49,11 +49,13 @@ var MAX_ADMIN = 1;
 var userList = new SocketList();
 var adminList = new SocketList(MAX_ADMIN);
 
+var clientServerOnline = true;
+
 /// SETUP ADMIN SOCKET ///
+
 adminNsp.on('connection', function(socket){
 
   console.log('admin connected');
-
 
   socket.on('add admin', function(userData){
 
@@ -65,6 +67,23 @@ adminNsp.on('connection', function(socket){
       adminNsp.emit('welcome', 'max number of admins already connected');
       socket.disconnect();
     }
+
+    //get any stragglers that mau have gotten here early
+    clientNsp.emit('get user info');
+
+  });
+
+  socket.on('toggle online status', function(){
+    clientServerOnline = !clientServerOnline;
+
+    if(clientServerOnline){
+      clientNsp.emit('get user info');
+    } else {
+
+      clientNsp.emit('connection closed');
+      userList.reset();
+      adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
+    }
   });
 
   socket.on('disconnect', function(){
@@ -74,21 +93,26 @@ adminNsp.on('connection', function(socket){
 });
 
 /// SETUP CLIENT SOCKETS ///
-
 clientNsp.on('connection', function(socket){
 
   console.log('client connected');
 
   socket.on('add user', function(userData){
-    userList.addUser(socket.id, userData);
-    clientNsp.emit('welcome');
+    if(clientServerOnline){
+      userList.addUser(socket.id, userData);
+      clientNsp.emit('welcome');
 
-    //let the admin know!
-    adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
-
+      //let the admin know!
+      adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
+    }
   });
 
   socket.on('disconnect', function(){
+    userList.removeUser(socket.id);
+    adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
+  });
+
+  socket.on('remove user', function(){
     userList.removeUser(socket.id);
     adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
   });
