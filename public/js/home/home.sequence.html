@@ -16,7 +16,7 @@
       <input ng-model="data.startTime" type="number">
   </md-input-container>
   <br/>
-  <md-button ng-disabled="!data.startTime" class="md-fab">
+  <md-button ng-disabled="!data.startTime" ng-click="startSequence()"class="md-fab">
     <md-icon md-font-set="material-icons"> play_arrow </md-icon>
   </md-button>
 </div>

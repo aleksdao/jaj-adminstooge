@@ -86,6 +86,10 @@ adminNsp.on('connection', function(socket){
     }
   });
 
+  socket.on('get client list', function(){
+    adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
+  });
+
   socket.on('disconnect', function(){
     adminList.removeUser(socket.id);
   });

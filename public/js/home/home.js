@@ -50,11 +50,23 @@ app.controller('HomeCtrl', function($scope, socket){
 
   $scope.event = {};
   $scope.msgLog = [];
-  $scope.clientList = [];
 
 
   $scope.sendMessage = function(){
     //socket.emit($scope.event);
+  };
+
+
+
+});
+
+app.controller('ServerStatsCtrl', function($scope, $interval, socket){
+  $scope.serverOnline = true;
+  $scope.clientList = [];
+  socket.emit('get client list');
+
+  $scope.toggleServerStatus = function(){
+    socket.emit('toggle online status');
   };
 
   //new users have joined server, update list
@@ -69,19 +81,14 @@ app.controller('HomeCtrl', function($scope, socket){
 
 });
 
-app.controller('ServerStatsCtrl', function($scope, $interval, socket){
-  $scope.serverOnline = true;
-
-  $scope.toggleServerStatus = function(){
-    socket.emit('toggle online status');
-  };
-
-});
-
-app.controller('HomeSequenceCtrl', function($scope){
+app.controller('HomeSequenceCtrl', function($scope, $state){
 
   $scope.currentSequence = "test";
-  $scope.data = { startTime: 3, sequence:'test' }
+  $scope.data = { startTime: 3};
+
+  $scope.startSequence = function(){
+    $state.go('livemode');
+  };
 
 });
 
