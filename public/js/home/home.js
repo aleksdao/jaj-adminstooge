@@ -78,7 +78,10 @@ app.controller('ServerStatsCtrl', function($scope, $interval, socket){
 
 });
 
-app.controller('HomeSequenceCtrl', function(){
+app.controller('HomeSequenceCtrl', function($scope){
+
+  $scope.currentSequence = "test";
+  $scope.data = { startTime: 3, sequence:'test' }
 
 });
 
