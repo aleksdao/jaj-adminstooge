@@ -1,4 +1,4 @@
-app.factory('SequenceHandler', function(socket){
+app.factory('SequenceHandler', function($http, socket){
 
   var _sequence;
   var _screenElement = {
@@ -25,6 +25,12 @@ app.factory('SequenceHandler', function(socket){
       //set Transport settings
       Tone.Transport.set(_sequence.getSettings());
       Tone.Transport.scheduleRepeat(this.eventLoop, _sequence.getSettings().resolution, 0);
+    },
+    fetchShow: function(){
+      return $http.get('http://jaj-showeditor.herokuapp.com/api/shows')
+      .then(function(response){
+        return response.data[0];
+      });
     },
     getTransportState: function(){
       return Tone.Transport.state;
@@ -103,6 +109,7 @@ Sequence.prototype.generateTimeline = function(){
     var self = this;
 
     this._sequence.events.forEach(function(event) {
+        event.time = event.startTime;
         self.timeline.addEvent(event);
     });
 };
