@@ -36,7 +36,7 @@ app.factory('SequenceHandler', function($http, socket){
       return Tone.Transport.state;
     },
     queueStart: function(preRoll, adjustForLatency){
-      var startTime = 0;
+      var startTime;
 
       if(adjustForLatency)
         startTime = (preRoll - socket.getLatency()) / 1000;
@@ -44,8 +44,8 @@ app.factory('SequenceHandler', function($http, socket){
         startTime = preRoll / 1000;
 
       this.stop(); //reset start time
-
-      Tone.Transport.start(startTime); //start Transport
+      
+      Tone.Transport.start("+" + startTime); //start Transport
     },
     stop: function(){
       Tone.Transport.position = 0;
@@ -55,9 +55,11 @@ app.factory('SequenceHandler', function($http, socket){
       //grab current time code position
       var currPos = Tone.Transport.position;
 
+      console.log(currPos);
       //check to see if the show is over, if so, stop Transport
-      if (currPos == _sequence.show_length){
-          return this.stop();
+      if (currPos == _sequence.getShowLength()){
+        Tone.Transport.position = 0;
+        return Tone.Transport.stop();
       }
 
       //play current events
@@ -125,4 +127,8 @@ Sequence.prototype.generateTimeline = function(){
 
 Sequence.prototype.getSettings = function(){
   return this._sequence.settings;
+};
+
+Sequence.prototype.getShowLength = function(){
+  return this._sequence.show_length;
 };
