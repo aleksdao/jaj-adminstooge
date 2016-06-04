@@ -1,7 +1,10 @@
 <div layout="row">
 
   <div flex="66">
-    Transport State: {{ transportState }}
+    <p>Current Show: {{ currentShow.name }}</p>
+
+    <p>Transport State: {{ transportState }}</p>
+    
     <md-button ng-click="restartShow()">Restart</md-button>
     <div id="previewWindow">
       <h3 id="previewTitle"> Title </h3>

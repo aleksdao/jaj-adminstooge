@@ -21,7 +21,7 @@ app.factory('SequenceHandler', function($http, socket){
     },
     loadSequence: function(sequence){
       _sequence = new Sequence(sequence);
-
+      console.log('_sequence', _sequence)
       //set Transport settings
       Tone.Transport.set(_sequence.getSettings());
       Tone.Transport.scheduleRepeat(this.eventLoop, _sequence.getSettings().resolution, 0);
@@ -50,16 +50,17 @@ app.factory('SequenceHandler', function($http, socket){
       return Tone.Transport.stop();
     },
     eventLoop: function(){
+      console.log(_sequence)
       //grab current time code position
       var currPos = Tone.Transport.position;
 
       //check to see if the show is over, if so, stop Transport
-      if (currPos == show.show_length){
+      if (currPos == _sequence.show_length){
           return this.stop();
       }
 
       //play current events
-      timeline.forEachAtTime(timelinePos, function(event) {
+      _sequence.timeline.forEachAtTime(timelinePos, function(event) {
         if (!event.preload) {
           var duration = (15 / _sequence.getSettings().bpm) * 1000;
           _actionFunc[event.action](event.params, duration);
@@ -67,7 +68,7 @@ app.factory('SequenceHandler', function($http, socket){
       });
 
       //check for preloaded events
-      timeline.forEachAtTime(currPos + "+" + _sequence.getSettings().resolution, function(event) {
+      _sequence.timeline.forEachAtTime(currPos + "+" + _sequence.getSettings().resolution, function(event) {
         if (event.preload) {
 
         }
@@ -81,17 +82,23 @@ app.factory('SequenceHandler', function($http, socket){
 /////// Event Action Functions //////
 function changeColor(params){
 
+  console.log('changeColor');
+
 }
 function fadeColor(params, duration){
+  console.log('fadeColor');
 
 }
 function changeText(params){
+  console.log('changetext');
 
 }
 function vibrate(params){
+  console.log('vibrate');
 
 }
 function strobeFlash(params, duration){
+  console.log('strobe');
 
 }
 
@@ -101,17 +108,18 @@ function Sequence(sequence){
     return;
 
   this._sequence = sequence;
-  this.timeline = this.generateTimeline();
+  this.timeline = new Tone.Timeline();
+
+  this.generateTimeline();
 }
 
 Sequence.prototype.generateTimeline = function(){
-    this.timeline = new Tone.Timeline();
     var self = this;
 
     this._sequence.events.forEach(function(event) {
-        event.time = event.startTime;
         self.timeline.addEvent(event);
     });
+
 };
 
 Sequence.prototype.getSettings = function(){
