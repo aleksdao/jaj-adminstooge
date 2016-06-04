@@ -100,9 +100,10 @@ function Sequence(sequence){
 
 Sequence.prototype.generateTimeline = function(){
     this.timeline = new Tone.Timeline();
+    var self = this;
 
     this._sequence.events.forEach(function(event) {
-        timeline.addEvent(event);
+        self.timeline.addEvent(event);
     });
 };
 

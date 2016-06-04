@@ -4,6 +4,16 @@ body {
 }
 
 #previewWindow {
-  width: 375px;
-  height: 667px;
+  width: 281px;
+  height: 500px;
+  background-color: #828282;
+  text-align: center;
+}
+
+#previewTitle {
+  padding-top: 100px;
+}
+
+#previewBody {
+  padding-top: 20px;
 }
