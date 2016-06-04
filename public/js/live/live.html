@@ -1,12 +1,20 @@
 <div layout="row">
 
   <div flex="66">
-    live mode
+    <p>Current Show: {{ currentShow.name }}</p>
+
+    <p>Transport State: {{ transportState }}</p>
+
+    <md-button class="md-raised" ng-click="restartShow()">Restart</md-button>
+    <div id="previewWindow">
+      <h3 id="previewTitle"> {{ screenText.previewTitle }} </h3>
+      <p id="previewBody"> {{ screenText.previewBody }} </p>
+    </div>
+
   </div>
 
   <div flex="33">
     <server-stats></server-stats>
-
   </div>
 
 </div>

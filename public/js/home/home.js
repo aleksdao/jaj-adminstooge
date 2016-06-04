@@ -63,6 +63,7 @@ app.controller('HomeCtrl', function($scope, socket){
 app.controller('ServerStatsCtrl', function($scope, $interval, socket){
   $scope.serverOnline = true;
   $scope.clientList = [];
+
   socket.emit('get client list');
 
   $scope.toggleServerStatus = function(){

@@ -1,4 +1,4 @@
-app.factory('SequenceHandler', function(socket){
+app.factory('SequenceHandler', function($http, socket){
 
   var _sequence;
   var _screenElement = {
@@ -26,18 +26,26 @@ app.factory('SequenceHandler', function(socket){
       Tone.Transport.set(_sequence.getSettings());
       Tone.Transport.scheduleRepeat(this.eventLoop, _sequence.getSettings().resolution, 0);
     },
+    fetchShow: function(){
+      return $http.get('http://jaj-showeditor.herokuapp.com/api/shows')
+      .then(function(response){
+        return response.data[0];
+      });
+    },
     getTransportState: function(){
       return Tone.Transport.state;
     },
     queueStart: function(preRoll, adjustForLatency){
-      var startTime = 0;
-      adjustForLatency = adjustForLatency || true; //defaults to true
+      var startTime;
 
       if(adjustForLatency)
         startTime = (preRoll - socket.getLatency()) / 1000;
+      else
+        startTime = preRoll / 1000;
 
       this.stop(); //reset start time
-      Tone.Transport.start(startTime); //start Transport
+
+      Tone.Transport.start("+" + startTime); //start Transport
     },
     stop: function(){
       Tone.Transport.position = 0;
@@ -47,13 +55,15 @@ app.factory('SequenceHandler', function(socket){
       //grab current time code position
       var currPos = Tone.Transport.position;
 
+      console.log(currPos);
       //check to see if the show is over, if so, stop Transport
-      if (currPos == show.show_length){
-          return this.stop();
+      if (currPos == _sequence.getShowLength()){
+        Tone.Transport.position = 0;
+        return Tone.Transport.stop();
       }
 
       //play current events
-      timeline.forEachAtTime(timelinePos, function(event) {
+      _sequence.timeline.forEachAtTime(currPos, function(event) {
         if (!event.preload) {
           var duration = (15 / _sequence.getSettings().bpm) * 1000;
           _actionFunc[event.action](event.params, duration);
@@ -61,7 +71,7 @@ app.factory('SequenceHandler', function(socket){
       });
 
       //check for preloaded events
-      timeline.forEachAtTime(currPos + "+" + _sequence.getSettings().resolution, function(event) {
+      _sequence.timeline.forEachAtTime(currPos + "+" + _sequence.getSettings().resolution, function(event) {
         if (event.preload) {
 
         }
@@ -75,17 +85,23 @@ app.factory('SequenceHandler', function(socket){
 /////// Event Action Functions //////
 function changeColor(params){
 
+  console.log('changeColor');
+  
 }
 function fadeColor(params, duration){
+  console.log('fadeColor');
 
 }
 function changeText(params){
+  console.log('changetext');
 
 }
 function vibrate(params){
+  console.log('vibrate');
 
 }
 function strobeFlash(params, duration){
+  console.log('strobe');
 
 }
 
@@ -95,17 +111,24 @@ function Sequence(sequence){
     return;
 
   this._sequence = sequence;
-  this.timeline = this.generateTimeline();
+  this.timeline = new Tone.Timeline();
+
+  this.generateTimeline();
 }
 
 Sequence.prototype.generateTimeline = function(){
-    this.timeline = new Tone.Timeline();
+    var self = this;
 
     this._sequence.events.forEach(function(event) {
-        timeline.addEvent(event);
+        self.timeline.addEvent(event);
     });
+
 };
 
 Sequence.prototype.getSettings = function(){
   return this._sequence.settings;
+};
+
+Sequence.prototype.getShowLength = function(){
+  return this._sequence.show_length;
 };
