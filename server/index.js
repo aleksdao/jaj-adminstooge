@@ -19,7 +19,7 @@ var SocketList = require('./utilities/socketlist-handler');
 app.use(bodyParser.json()); // for parsing application/json
 
 /// START SERVER ///
-server.listen(3001, function(){
+server.listen(3000, function(){
   console.log('listening on port 3000');
 });
 
@@ -44,7 +44,7 @@ app.get('/', function (req, res) {
 // });
 
 ///SOCKET IO EVENTS ///
-var MAX_ADMIN = 1;
+var MAX_ADMIN = 3;
 
 var userList = new SocketList();
 var adminList = new SocketList(MAX_ADMIN);
