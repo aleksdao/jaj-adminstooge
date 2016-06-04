@@ -15,6 +15,7 @@ app.config(function ($stateProvider) {
 /// sample show
 var sampleShow = {
   show_length:'1:0:0',
+  name: 'Sample Show',
   settings:{
     bpm: 90,
     resolution:'16n',

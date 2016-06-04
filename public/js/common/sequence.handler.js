@@ -50,7 +50,6 @@ app.factory('SequenceHandler', function($http, socket){
       return Tone.Transport.stop();
     },
     eventLoop: function(){
-      console.log(_sequence)
       //grab current time code position
       var currPos = Tone.Transport.position;
 
@@ -60,7 +59,7 @@ app.factory('SequenceHandler', function($http, socket){
       }
 
       //play current events
-      _sequence.timeline.forEachAtTime(timelinePos, function(event) {
+      _sequence.timeline.forEachAtTime(currPos, function(event) {
         if (!event.preload) {
           var duration = (15 / _sequence.getSettings().bpm) * 1000;
           _actionFunc[event.action](event.params, duration);
