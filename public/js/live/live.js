@@ -30,16 +30,20 @@ var sampleShow = {
 };
 
 app.controller('LiveCtrl', function($scope, socket, SequenceHandler){
-  $scope.transportState = SequenceHandler.getTransportState();
+  $scope.transportState = updateState(SequenceHandler);
   $scope.currentShow = sampleShow;
-  console.log(sampleShow);
+  $scope.screenText = {previewTitle: 'Title', previewBody:'body'};
+
   SequenceHandler.init({container: '#previewWindow', title: '#previewBody', body:'#previewBody'});
   SequenceHandler.loadSequence(sampleShow);
 
   $scope.restartShow = function(){
-    console.log('show bro');
 
-    SequenceHandler.queueStart(5000, true);
-
+    SequenceHandler.queueStart(3000, true);
+    $scope.transportState = updateState(SequenceHandler);
   };
 });
+
+function updateState(SequenceHandler){
+  return SequenceHandler.getTransportState();
+}

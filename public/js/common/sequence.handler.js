@@ -44,7 +44,7 @@ app.factory('SequenceHandler', function($http, socket){
         startTime = preRoll / 1000;
 
       this.stop(); //reset start time
-      
+
       Tone.Transport.start("+" + startTime); //start Transport
     },
     stop: function(){
@@ -86,7 +86,7 @@ app.factory('SequenceHandler', function($http, socket){
 function changeColor(params){
 
   console.log('changeColor');
-
+  
 }
 function fadeColor(params, duration){
   console.log('fadeColor');
