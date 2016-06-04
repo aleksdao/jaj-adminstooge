@@ -30,21 +30,17 @@ app.use('/stylesheets', express.static(path.join(__dirname, '../public/styleshee
 
 
 /// MAIN ROUTE ///
-app.get('/admin', function (req, res) {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
-});
-
-/// MAIN ROUTE ///
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, '../public/client.html'));
 });
 
-// app.get('/client', function (req, res) {
-//   res.sendFile(path.join(__dirname, '../public/client.html'));
-// });
+/// MAIN ROUTE ///
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+});
 
 ///SOCKET IO EVENTS ///
-var MAX_ADMIN = 1;
+var MAX_ADMIN = 3;
 
 var userList = new SocketList();
 var adminList = new SocketList(MAX_ADMIN);

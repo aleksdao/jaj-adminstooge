@@ -2,3 +2,8 @@ body {
   margin: auto;
   width: 80%;
 }
+
+#previewWindow {
+  width: 375px;
+  height: 667px;
+}

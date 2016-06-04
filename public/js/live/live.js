@@ -10,6 +10,6 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('LiveCtrl', function($scope, socket){
+app.controller('LiveCtrl', function($scope, socket, SequenceHandler){
 
 });
