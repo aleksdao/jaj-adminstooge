@@ -21,17 +21,3 @@ app.run(function(socket){
   socket.emit('add admin', 'Admin');
 
 });
-
-
-app.factory('MessageFactory', function($http){
-
-  return {
-    emit: function(event){
-      var msgData = {};
-      msgData[event.key] = event.value; //parse input group data
-      //socket.emit('admin broadcast', {type: event.type, eventData: msgData}); //send message
-    }
-
-  };
-
-});
