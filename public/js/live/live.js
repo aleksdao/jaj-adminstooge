@@ -38,6 +38,8 @@ app.controller('LiveCtrl', function($scope, socket, SequenceHandler){
 
   $scope.restartShow = function(){
     console.log('show bro');
-    SequenceHandler.queueStart(2000);
+
+    SequenceHandler.queueStart(5000, true);
+
   };
 });

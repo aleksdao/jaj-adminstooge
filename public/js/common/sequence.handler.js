@@ -21,7 +21,7 @@ app.factory('SequenceHandler', function($http, socket){
     },
     loadSequence: function(sequence){
       _sequence = new Sequence(sequence);
-      console.log('_sequence', _sequence)
+
       //set Transport settings
       Tone.Transport.set(_sequence.getSettings());
       Tone.Transport.scheduleRepeat(this.eventLoop, _sequence.getSettings().resolution, 0);
@@ -37,12 +37,14 @@ app.factory('SequenceHandler', function($http, socket){
     },
     queueStart: function(preRoll, adjustForLatency){
       var startTime = 0;
-      adjustForLatency = adjustForLatency || true; //defaults to true
 
       if(adjustForLatency)
         startTime = (preRoll - socket.getLatency()) / 1000;
+      else
+        startTime = preRoll / 1000;
 
       this.stop(); //reset start time
+
       Tone.Transport.start(startTime); //start Transport
     },
     stop: function(){
