@@ -93,6 +93,17 @@ app.controller('HomeSequenceCtrl', function($scope, $state){
 
 });
 
-app.controller('HomeOneShotCtrl', function(){
+app.controller('HomeOneShotCtrl', function($scope, socket){
+
+  $scope.data = {};
+
+  $scope.sendMessage = function(){
+    socket.emit('admin command', { message: 'send message', params: { text: $scope.data.message } });
+  };
+
+  $scope.getPhoto = function(){
+    socket.emit('admin command', { message: 'get photo', params: {  } });
+
+  };
 
 });

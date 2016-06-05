@@ -7,6 +7,8 @@ app.factory('SequenceHandler', function($http, socket){
     body: undefined
   }; //used to store target DOM objects
 
+  var transitionTime;
+
   var _actionFunc = {
     changeColor: changeColor,
     fadeColor: fadeColor,
@@ -14,6 +16,8 @@ app.factory('SequenceHandler', function($http, socket){
     vibrate: vibrate,
     strobeFlash: strobeFlash
   };
+
+
 
   /////// Event Action Functions //////
   function changeColor(params){
@@ -60,6 +64,7 @@ app.factory('SequenceHandler', function($http, socket){
       //set Transport settings
       Tone.Transport.set(_sequence.getSettings());
       Tone.Transport.scheduleRepeat(this.eventLoop, _sequence.getSettings().resolution, 0);
+      transitionTime = bpmScale[_sequence.getSettings().resolution] / _sequence.getSettings().bpm;
     },
     fetchShow: function(){
       return $http.get('http://jaj-showeditor.herokuapp.com/api/shows')
@@ -117,6 +122,12 @@ app.factory('SequenceHandler', function($http, socket){
   };
 });
 
+/// LUT ///
+var bpmScale = {
+  '4n': 60,
+  '8n': 30,
+  '16n': 15
+};
 
 
 /////// Sequence obj ///////

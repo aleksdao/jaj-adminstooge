@@ -5,7 +5,7 @@
       <input ng-model="data.message" type="text">
   </md-input-container>
 
-  <md-button class="md-fab">
+  <md-button ng-disable="!data.message" class="md-fab" ng-click="sendMessage()">
     <md-icon md-font-set="material-icons"> send </md-icon>
   </md-button>
   <br/>

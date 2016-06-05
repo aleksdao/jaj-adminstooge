@@ -14,7 +14,7 @@ app.config(function ($stateProvider) {
 
 /// sample show
 var sampleShow = {
-  show_length:'1:0:0',
+  show_length:'1:2:0',
   name: 'Sample Show',
   settings:{
     bpm: 90,
@@ -29,6 +29,8 @@ var sampleShow = {
     {time: '0:2:0', action: 'changeText',  params: {target: 'body', text: 'to eat more waffles', color: '#eba200'}},
 
     {time: '0:3:0', action: 'changeColor', params: {color: '#888'}},
+    {time: '1:0:0', action: 'fadeColor', params: {color: '#4187ff'}},
+
   ]
 };
 
