@@ -18,6 +18,7 @@ app.run(function(socket){
 
   /// init admin socket connection ///
   socket.connect('/admin');
+  socket.startPingRepeat();
   socket.emit('add admin', 'Admin');
 
 });
