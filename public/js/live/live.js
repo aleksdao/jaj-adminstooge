@@ -28,6 +28,10 @@ var sampleShow = {
     {time: '0:2:0', action: 'changeColor', params: {color: '#666'}},
     {time: '0:2:0', action: 'changeText',  params: {target: 'title', text: 'this is the dream...'}},
     {time: '0:2:0', action: 'changeText',  params: {target: 'body', text: 'to eat more waffles', color: '#eba200'}},
+    {time: '0:1:0', action: 'strobeFlash'},
+    {time: '0:2:0', action: 'strobeFlash'},
+    {time: '0:3:0', action: 'strobeFlash'},
+    {time: '1:0:0', action: 'strobeFlash'},
 
     {time: '0:3:0', action: 'changeColor', params: {color: '#888'}},
 
