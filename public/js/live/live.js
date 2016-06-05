@@ -25,6 +25,9 @@ var sampleShow = {
     {time: '0:0:0', action: 'changeColor', params: {color: '#333'}},
     {time: '0:1:0', action: 'changeColor', params: {color: '#111'}},
     {time: '0:2:0', action: 'changeColor', params: {color: '#666'}},
+    {time: '0:2:0', action: 'changeText',  params: {target: 'title', text: 'this is the dream...'}},
+    {time: '0:2:0', action: 'changeText',  params: {target: 'body', text: 'to eat more waffles', color: '#eba200'}},
+
     {time: '0:3:0', action: 'changeColor', params: {color: '#888'}},
   ]
 };
@@ -32,16 +35,21 @@ var sampleShow = {
 app.controller('LiveCtrl', function($scope, socket, SequenceHandler){
   $scope.transportState = updateState(SequenceHandler);
   $scope.currentShow = sampleShow;
-  $scope.screenText = {previewTitle: 'Title', previewBody:'body'};
 
-  SequenceHandler.init({container: '#previewWindow', title: '#previewBody', body:'#previewBody'});
+  socket.startPingRepeat();
+
+  SequenceHandler.init({container: '#previewWindow', title: '#previewTitle', body:'#previewBody'});
   SequenceHandler.loadSequence(sampleShow);
 
   $scope.restartShow = function(){
-
-    SequenceHandler.queueStart(3000, true);
-    $scope.transportState = updateState(SequenceHandler);
+    socket.emit('admin command', {message: 'play', params:{ startTime: 3000, sequence: sampleShow } });
   };
+
+  socket.on('play', function(data){
+    console.log(socket.getLatency())
+    SequenceHandler.queueStart(data.startTime, true);
+    $scope.transportState = updateState(SequenceHandler);
+  });
 });
 
 function updateState(SequenceHandler){

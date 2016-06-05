@@ -94,6 +94,13 @@ adminNsp.on('connection', function(socket){
     cb(startTime);
   });
 
+  socket.on('admin command', function(data){
+    console.log('admin command', data);
+    
+    adminNsp.emit(data.message, data.params);
+    clientNsp.emit(data.message, data.params);
+  });
+
 });
 
 /// SETUP CLIENT SOCKETS ///
