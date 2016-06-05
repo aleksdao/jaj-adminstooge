@@ -98,12 +98,11 @@ app.controller('HomeOneShotCtrl', function($scope, socket){
   $scope.data = {};
 
   $scope.sendMessage = function(){
-    socket.emit('admin command', { message: 'send message', params: { text: $scope.data.message } });
+    socket.emit('admin command', { message: 'send message', params: { text: $scope.data.message, duration: 4000 } });
   };
 
   $scope.getPhoto = function(){
     socket.emit('admin command', { message: 'get photo', params: {  } });
-
   };
 
 });
