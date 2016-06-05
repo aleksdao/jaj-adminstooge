@@ -40,6 +40,12 @@ app.factory('SequenceHandler', function($http, socket){
     console.log('strobe');
 
   }
+  function resetScreen(){
+    _screenElement.container.css('background-color', '#eee');
+    _screenElement.title.text('');
+    _screenElement.body.text('');
+
+  }
 
   return {
     init: function(screenElement){
