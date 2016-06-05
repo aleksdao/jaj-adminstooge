@@ -15,9 +15,38 @@ app.factory('SequenceHandler', function($http, socket){
     strobeFlash: strobeFlash
   };
 
+  /////// Event Action Functions //////
+  function changeColor(params){
+
+    _screenElement.container.css('background-color', params.color);
+
+  }
+  function fadeColor(params, duration){
+    console.log('fadeColor');
+
+  }
+  function changeText(params){
+    _screenElement[params.target].text(params.text);
+
+    if(params.color)
+      _screenElement[params.target].css('color', params.color);
+
+  }
+  function vibrate(params){
+    console.log('vibrate');
+
+  }
+  function strobeFlash(params, duration){
+    console.log('strobe');
+
+  }
+
   return {
     init: function(screenElement){
-      _screenElement = screenElement;
+      _screenElement.container = angular.element(document.querySelector(screenElement.container));
+      _screenElement.title = angular.element(document.querySelector(screenElement.title));
+      _screenElement.body = angular.element(document.querySelector(screenElement.body));
+
     },
     loadSequence: function(sequence){
       _sequence = new Sequence(sequence);
@@ -82,28 +111,7 @@ app.factory('SequenceHandler', function($http, socket){
   };
 });
 
-/////// Event Action Functions //////
-function changeColor(params){
 
-  console.log('changeColor');
-  
-}
-function fadeColor(params, duration){
-  console.log('fadeColor');
-
-}
-function changeText(params){
-  console.log('changetext');
-
-}
-function vibrate(params){
-  console.log('vibrate');
-
-}
-function strobeFlash(params, duration){
-  console.log('strobe');
-
-}
 
 /////// Sequence obj ///////
 function Sequence(sequence){
