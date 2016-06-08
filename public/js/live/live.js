@@ -24,6 +24,7 @@ var sampleShow = {
     {time: '0:1:0', action: 'changeColor', params: {color: randColor()}},
     {time: '0:2:0', action: 'changeColor', params: {color: randColor()}},
     {time: '0:3:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '0:3:0', action: 'changeText', params: {text: 'hey there', target:'title', color: randColor()}},
     {time: '1:0:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
     {time: '1:1:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
     {time: '1:2:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
