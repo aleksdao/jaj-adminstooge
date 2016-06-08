@@ -4,8 +4,7 @@
       <label>Message</label>
       <input ng-model="data.message" type="text">
   </md-input-container>
-
-  <md-button class="md-fab">
+  <md-button ng-disabled="!data.message" class="md-fab" ng-click="sendMessage()">
     <md-icon md-font-set="material-icons"> send </md-icon>
   </md-button>
   <br/>
@@ -18,5 +17,5 @@
   </md-input-container>
 
   <md-button class="md-fab">
-    <md-icon md-font-set="material-icons"> camera_alt </md-icon>
+    <md-icon md-font-set="material-icons" ng-click="getPhoto()"> camera_alt </md-icon>
   </md-button>

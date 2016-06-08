@@ -96,7 +96,7 @@ adminNsp.on('connection', function(socket){
 
   socket.on('admin command', function(data){
     console.log('admin command', data);
-    
+
     adminNsp.emit(data.message, data.params);
     clientNsp.emit(data.message, data.params);
   });
@@ -106,7 +106,7 @@ adminNsp.on('connection', function(socket){
 /// SETUP CLIENT SOCKETS ///
 clientNsp.on('connection', function(socket){
 
-  console.log('client connected');
+  console.log('client connected', userList, userList._socketList.length);
 
   socket.on('add user', function(userData){
     if(clientServerOnline){
@@ -130,6 +130,7 @@ clientNsp.on('connection', function(socket){
 
   socket.on('latency', function (startTime, cb) {
     cb(startTime);
+
   });
 
 });
