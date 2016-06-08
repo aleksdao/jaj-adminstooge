@@ -11,7 +11,7 @@ app.factory('SequenceHandler', function($http, socket){
 
   var _actionFunc = {
     changeColor: changeColor,
-    fadeColor: fadeColor,
+    fadeColorTo: fadeColorTo,
     changeText: changeText,
     vibrate: vibrate,
     strobeFlash: strobeFlash
@@ -22,7 +22,7 @@ app.factory('SequenceHandler', function($http, socket){
     setTransitionTime(0);
     _screenElement.container.css("background-color", params.color);
   }
-  function fadeColor(params, duration){
+  function fadeColorTo(params, duration){
     setTransitionTime(transitionTime);
     _screenElement.container.css("background-color", params.color);
   }
@@ -34,10 +34,10 @@ app.factory('SequenceHandler', function($http, socket){
 
   }
   function vibrate(params){
-
+    //not implemented on admin side
   }
   function strobeFlash(params, duration){
-
+    //not implemented on admin side
   }
   function resetScreen(){
     _screenElement.container.css('background-color', '#eee');
@@ -58,7 +58,15 @@ app.factory('SequenceHandler', function($http, socket){
 
     },
     loadSequence: function(sequence){
+
+      //set Transport settings (tempo, time sig, etc)
+      Tone.Transport.set(sequence.settings);
+
+      //create timeline
       _sequence = new Sequence(sequence);
+
+      //set up our event handler
+      Tone.Transport.scheduleRepeat(this.eventLoop, _sequence.getSettings().resolution, 0);
 
       //calculate transition time for FX
       transitionTime = (bpmScale[_sequence.getSettings().resolution] / _sequence.getSettings().bpm)*1000;
@@ -70,10 +78,7 @@ app.factory('SequenceHandler', function($http, socket){
       };
       _screenElement.container.css(transSet);
 
-      //set Transport settings
-      Tone.Transport.set(_sequence.getSettings());
-      Tone.Transport.scheduleRepeat(this.eventLoop, _sequence.getSettings().resolution, 0);
-    },
+          },
     fetchShow: function(){
       return $http.get('http://jaj-showeditor.herokuapp.com/api/shows')
       .then(function(response){
@@ -102,7 +107,6 @@ app.factory('SequenceHandler', function($http, socket){
     eventLoop: function(){
       //grab current time code position
       var currPos = Tone.Transport.position;
-
       //check to see if the show is over, if so, stop Transport
       if (currPos == _sequence.getShowLength()){
         Tone.Transport.stop();
@@ -112,16 +116,18 @@ app.factory('SequenceHandler', function($http, socket){
 
       //play current events
       _sequence.timeline.forEachAtTime(currPos, function(event) {
+
         if (!event.preload) {
-          var duration = (15 / _sequence.getSettings().bpm) * 1000;
-          _actionFunc[event.action](event.params, duration);
+          _actionFunc[event.action](event.params);
         }
       });
 
       //check for preloaded events
-      _sequence.timeline.forEachAtTime(currPos + "+" + _sequence.getSettings().resolution, function(event) {
-        if (event.preload) {
+      _sequence.timeline.forEachAtTime(currPos + '+' + _sequence.getSettings().resolution, function(event) {
 
+        if (event.preload) {
+          console.log('heyyyyyyy')
+          _actionFunc[event.action](event.params, transitionTime);
         }
 
       });

@@ -14,28 +14,22 @@ app.config(function ($stateProvider) {
 
 /// sample show
 var sampleShow = {
-  show_length:'1:2:0',
-  name: 'Sample Show',
+  show_length:'2:0:0',
+  name: 'Sample oo',
   settings:{
-    bpm: 90,
+    bpm: 120,
     resolution:'16n',
     time_sig: 4
   },
   events:[
-    {time: '0:0:0', action: 'changeColor', params: {color: '#333'}},
-    {time: '0:0:0', action: 'vibrate'},
-    {time: '0:1:0', action: 'changeColor', params: {color: '#111'}},
-    {time: '0:2:0', action: 'changeColor', params: {color: '#666'}},
-    {time: '0:2:0', action: 'changeText',  params: {target: 'title', text: 'this is the dream...'}},
-    {time: '0:2:0', action: 'changeText',  params: {target: 'body', text: 'to eat more waffles', color: '#eba200'}},
-    {time: '0:1:0', action: 'strobeFlash'},
-    {time: '0:2:0', action: 'strobeFlash'},
-    {time: '0:3:0', action: 'strobeFlash'},
-    {time: '1:0:0', action: 'strobeFlash'},
-
-    {time: '0:3:0', action: 'changeColor', params: {color: '#888'}},
-
-    {time: '1:0:0', action: 'fadeColor', params: {color: '#4187ff'}},
+    {time: '0:0:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '0:1:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '0:2:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '0:3:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '1:0:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
+    {time: '1:1:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
+    {time: '1:2:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
+    {time: '1:3:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
 
   ]
 };
@@ -63,3 +57,7 @@ app.controller('LiveCtrl', function($scope, socket, SequenceHandler){
 function updateState(SequenceHandler){
   return SequenceHandler.getTransportState();
 }
+
+function randColor(){
+  return '#' + Math.random().toString(16).slice(2, 8).toUpperCase();
+};
