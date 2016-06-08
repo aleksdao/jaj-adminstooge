@@ -126,7 +126,6 @@ app.factory('SequenceHandler', function($http, socket){
       _sequence.timeline.forEachAtTime(currPos + '+' + _sequence.getSettings().resolution, function(event) {
 
         if (event.preload) {
-          console.log('heyyyyyyy')
           _actionFunc[event.action](event.params, transitionTime);
         }
 
