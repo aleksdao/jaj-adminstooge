@@ -4,9 +4,7 @@ app.config(function ($stateProvider) {
         url: '/livemode',
         templateUrl: '/js/live/live.html',
         resolve: {
-          // sampleShow: function(SequenceHandler){
-          //   return SequenceHandler.fetchShow();
-          // }
+
         },
         controller: 'LiveCtrl'
     });
@@ -44,11 +42,10 @@ app.controller('LiveCtrl', function($scope, socket, SequenceHandler){
   SequenceHandler.loadSequence(sampleShow);
 
   $scope.restartShow = function(){
-    socket.emit('admin command', {message: 'play', params:{ startTime: 3000, sequence: sampleShow } });
+    socket.emit('admin command', {message: 'play', params:{ startTime: 1000, sequence: sampleShow } });
   };
 
   socket.on('play', function(data){
-    console.log(socket.getLatency())
     SequenceHandler.queueStart(data.startTime, true);
     $scope.transportState = updateState(SequenceHandler);
   });
