@@ -43,7 +43,9 @@ app.controller('LiveCtrl', function($scope, socket, SequenceHandler){
   SequenceHandler.loadSequence(sampleShow);
 
   $scope.restartShow = function(){
-    socket.emit('admin command', {message: 'play', params:{ startTime: 1000, sequence: sampleShow } });
+    socket.emit('admin command', {message: 'send show', params:{ sequence: sampleShow } });
+    socket.emit('admin command', {message: 'play', params:{ startTime: 3000, sequence: sampleShow } });
+
   };
 
   socket.on('play', function(data){
