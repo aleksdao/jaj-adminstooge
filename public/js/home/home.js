@@ -4,7 +4,11 @@ app.config(function ($stateProvider) {
         url: '/admin',
         templateUrl: '/js/home/home.html',
         resolve: {
+          ipAddress: function(ipAddressFactory){
 
+            return ipAddressFactory.fetchIpAddresses();
+
+          }
 
         },
         controller: 'HomeCtrl'
@@ -23,7 +27,10 @@ app.directive('serverStats', function(){
   return {
     restrict: 'E',
     templateUrl: '/js/home/home.serverstats.html',
-    controller: 'ServerStatsCtrl'
+    controller: 'ServerStatsCtrl',
+    scope:{
+
+    }
   };
 });
 
@@ -61,9 +68,10 @@ app.controller('HomeCtrl', function($scope, socket){
 
 });
 
-app.controller('ServerStatsCtrl', function($scope, $interval, socket){
+app.controller('ServerStatsCtrl', function($scope, $interval, ipAddressFactory, socket){
   $scope.serverOnline = true;
   $scope.clientList = [];
+  $scope.data = { showDetails: false, showIP: ipAddressFactory.getSocketIP(), photoIP: ipAddressFactory.getPhotoIP()};
 
   socket.emit('get client list');
 
