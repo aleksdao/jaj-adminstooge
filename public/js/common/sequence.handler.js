@@ -111,15 +111,18 @@ app.factory('SequenceHandler', function($http, socket){
       var currPos = Tone.Transport.position;
 
       //start the song?
-      if(currPos === '0:0:0')
+      if(currPos === '0:0:0'){
+        song.currentTime = 0;
+
         song.play();
+
+      }
 
       //check to see if the show is over, if so, stop Transport
       if (currPos == _sequence.getShowLength()){
         Tone.Transport.stop();
         Tone.Transport.position = 0;
         song.pause();
-        song.currentTime = 0;
         return;
       }
 
