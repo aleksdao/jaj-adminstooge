@@ -33,9 +33,11 @@ var sampleShow = {
   ]
 };
 
-app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler){
+app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, ngAudio){
   $scope.transportState = updateState(SequenceHandler);
   $scope.currentShow = sampleShow;
+
+  $scope.song = ngAudio.load('/assets/default.wav');
 
   socket.startPingRepeat();
 
@@ -51,7 +53,7 @@ app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler){
   };
 
   socket.on('play', function(data){
-    SequenceHandler.queueStart(data.startTime, true);
+    SequenceHandler.queueStart(data.startTime, true, $scope.song);
     $scope.transportState = updateState(SequenceHandler);
   });
 });

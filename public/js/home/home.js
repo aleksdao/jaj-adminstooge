@@ -82,7 +82,7 @@ app.controller('ServerStatsCtrl', function($scope, $interval, ipAddressFactory, 
   $scope.updateIp = function(){
     ipAddressFactory.updateIP($scope.data.photoIP, $scope.data.showIP)
     .then(function(){
-
+      
     });
   };
 

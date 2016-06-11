@@ -1,4 +1,4 @@
-var app = angular.module('jaj-admin', ['ui.router','ngMaterial']);
+var app = angular.module('jaj-admin', ['ui.router','ngMaterial','ngAudio']);
 
 
 app.config(function ($urlRouterProvider, $locationProvider, $mdThemingProvider) {
