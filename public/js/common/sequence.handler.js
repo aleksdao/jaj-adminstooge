@@ -79,10 +79,10 @@ app.factory('SequenceHandler', function($http, socket){
       _screenElement.container.css(transSet);
 
           },
-    fetchShow: function(){
+    fetchAllShows: function(){
       return $http.get('http://jaj-showeditor.herokuapp.com/api/shows')
       .then(function(response){
-        return response.data[0];
+        return response.data;
       });
     },
     getTransportState: function(){

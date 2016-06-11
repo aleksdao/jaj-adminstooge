@@ -106,7 +106,7 @@ adminNsp.on('connection', function(socket){
 /// SETUP CLIENT SOCKETS ///
 clientNsp.on('connection', function(socket){
 
-  console.log('client connected', userList, userList._socketList.length);
+  console.log('client connected');
 
   socket.on('add user', function(userData){
     if(clientServerOnline){

@@ -27,10 +27,15 @@
 </head>
 
 <body ng-app="jaj-admin" id="main">
-  <h1 class="md-display-2">Admin Panel</h1>
+  <md-toolbar class=" md-accent">
+      <h2 class="md-toolbar-tools">
+        <span>Presenter Dashboard</span>
+      </h2>
 
-  <ui-view></ui-view>
-
+  </md-toolbar>
+    <md-content class="md-padding">
+    <ui-view></ui-view>
+  </md-content>
 </body>
 
 </html>
