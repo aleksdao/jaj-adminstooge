@@ -102,16 +102,33 @@ app.controller('HomeSequenceCtrl', function($scope, $state){
 
 });
 
-app.controller('HomeOneShotCtrl', function($scope, socket){
+app.controller('HomeOneShotCtrl', function($scope, socket, PhotoEventFactory){
 
   $scope.data = {};
+
+  $scope.photoEvent = {inProgress: false, count: 0};
 
   $scope.sendMessage = function(){
     socket.emit('admin command', { message: 'send message', params: { text: $scope.data.message, duration: 4000 } });
   };
 
   $scope.getPhoto = function(){
+    $scope.photoEvent.inProgress = true;
+
     socket.emit('admin command', { message: 'get photo', params: {  } });
+
+    PhotoEventFactory.startPhotoEvent();
+
   };
+
+  $scope.processPhoto = function(){
+    PhotoEventFactory.processPhotoEvent();
+  };
+
+  socket.on('photo added', function(data){
+
+    $scope.photoEvent.count = data.count;
+
+  });
 
 });
