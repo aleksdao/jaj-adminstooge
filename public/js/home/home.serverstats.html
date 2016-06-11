@@ -16,15 +16,19 @@
 
   <div ng-show="data.showDetails">
     <br/>
-    <md-input-container class="md-block">
-        <label>Show Server IP</label>
-        <input ng-model="data.showIP" type="text">
-    </md-input-container>
-    <br/>
-    <md-input-container class="md-block">
-        <label>Photo Server IP</label>
-        <input class="md-block" ng-model="data.photoIP" type="text">
-    </md-input-container>
+    <form name="ipForm">
+      <md-input-container class="md-block">
+          <label>Show Server IP</label>
+          <input ng-model="data.showIP" name="showIP" type="text">
+      </md-input-container>
+
+      <br/>
+      <md-input-container class="md-block">
+          <label>Photo Server IP</label>
+          <input class="md-block" ng-model="data.photoIP" name="photoIP" type="text">
+      </md-input-container>
+      <md-button class="md-raised md-warn" ng-click="updateIp()" ng-show="ipForm.$dirty && !ipForm.$pristine"> Update </md-button>
+  </form>
 
   </div>
 

@@ -79,6 +79,13 @@ app.controller('ServerStatsCtrl', function($scope, $interval, ipAddressFactory, 
     socket.emit('toggle online status');
   };
 
+  $scope.updateIp = function(){
+    ipAddressFactory.updateIP($scope.data.photoIP, $scope.data.showIP)
+    .then(function(){
+
+    });
+  };
+
   //new users have joined server, update list
   socket.on("admin updated client list", function(clientList){
     $scope.clientList = clientList;
