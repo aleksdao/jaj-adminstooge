@@ -19,7 +19,7 @@ var SocketList = require('./utilities/socketlist-handler');
 app.use(bodyParser.json()); // for parsing application/json
 
 /// START SERVER ///
-server.listen(3001, function(){
+server.listen(3000, function(){
   console.log('listening on port 3000');
 });
 
@@ -30,21 +30,17 @@ app.use('/stylesheets', express.static(path.join(__dirname, '../public/styleshee
 
 
 /// MAIN ROUTE ///
-app.get('/admin', function (req, res) {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
-});
-
-/// MAIN ROUTE ///
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, '../public/client.html'));
 });
 
-// app.get('/client', function (req, res) {
-//   res.sendFile(path.join(__dirname, '../public/client.html'));
-// });
+/// MAIN ROUTE ///
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+});
 
 ///SOCKET IO EVENTS ///
-var MAX_ADMIN = 1;
+var MAX_ADMIN = 3;
 
 var userList = new SocketList();
 var adminList = new SocketList(MAX_ADMIN);
@@ -86,12 +82,27 @@ adminNsp.on('connection', function(socket){
     }
   });
 
+  socket.on('get client list', function(){
+    adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
+  });
+
   socket.on('disconnect', function(){
     adminList.removeUser(socket.id);
   });
 
   socket.on('latency', function (startTime, cb) {
     cb(startTime);
+  });
+
+  socket.on('admin command', function(data){
+    console.log('admin command', data);
+
+    adminNsp.emit(data.message, data.params);
+    clientNsp.emit(data.message, data.params);
+  });
+
+  socket.on('photo added', function(data){
+    adminNsp.emit('photo added', data);
   });
 
 });
@@ -123,6 +134,7 @@ clientNsp.on('connection', function(socket){
 
   socket.on('latency', function (startTime, cb) {
     cb(startTime);
+
   });
 
 });

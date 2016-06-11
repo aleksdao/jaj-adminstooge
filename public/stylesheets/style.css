@@ -1,4 +1,19 @@
 body {
   margin: auto;
-  width: 80%;
+  width: 100%;
+}
+
+#previewWindow {
+  width: 281px;
+  height: 500px;
+  background-color: #828282;
+  text-align: center;
+}
+
+#previewTitle {
+  padding-top: 100px;
+}
+
+#previewBody {
+  padding-top: 20px;
 }

@@ -4,10 +4,13 @@
     <title> Welcome to the Admin Panel</title>
     <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="/node_modules/angular/angular.js" defer></script>
     <script src="/node_modules/angular-ui-router/release/angular-ui-router.min.js" defer></script>
+    <script src="/node_modules/tone/build/tone.js" defer></script>
 
     <script src="/node_modules/angular-aria/angular-aria.js" defer></script>
     <script src="/node_modules/angular-animate/angular-animate.js" defer></script>
@@ -15,16 +18,27 @@
 
     <script src="/js/app.js" defer></script>
     <script src="/js/socketserver/socket.factory.js" defer></script>
+    <script src="/js/common/ipAddress.Factory.js" defer></script>
+    <script src="/js/common/photoEvent.Factory.js" defer></script>
+
     <script src="/js/home/home.js" defer></script>
+    <script src="/js/live/live.js" defer></script>
+    <script src="/js/common/sequence.handler.js" defer></script>
 
 
     <base href="/">
 </head>
 
 <body ng-app="jaj-admin" id="main">
+  <md-toolbar class=" md-accent">
+      <h2 class="md-toolbar-tools">
+        <span>Presenter Dashboard</span>
+      </h2>
 
-  <ui-view></ui-view>
-
+  </md-toolbar>
+    <md-content class="md-padding">
+    <ui-view></ui-view>
+  </md-content>
 </body>
 
 </html>

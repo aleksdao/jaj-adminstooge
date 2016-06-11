@@ -1,14 +1,24 @@
-  <h3> Send a message</h3>
-  <md-input-container>
-      <label>Message Type</label>
-      <input ng-model="event.type" type="text">
-  </md-input-container>
-  <md-input-container>
-      <input ng-model="event.key" type="text" placeholder="Key" />
-  </md-input-container>
-  <md-input-container>
-      <input ng-model="event.value" type="text" placeholder="Value" />
-  </md-input-container>
+  <h1 class="md-title">Send a message</h1>
 
+  <md-input-container>
+      <label>Message</label>
+      <input ng-model="data.message" type="text">
+  </md-input-container>
+  <md-button ng-disabled="!data.message" class="md-fab" ng-click="sendMessage()">
+    <md-icon md-font-set="material-icons"> send </md-icon>
+  </md-button>
   <br/>
-  <md-button ng-click="sendMessage()"> Emit </md-button>
+
+  <h1 class="md-title">Start Photo Event</h1>
+
+  <md-button class="md-fab">
+    <md-icon md-font-set="material-icons" ng-click="getPhoto()"> camera_alt </md-icon>
+  </md-button>
+
+  <div ng-show="photoEvent.inProgress">
+    <p> Photos so far: {{ photoEvent.count }}
+
+      <md-button class="md-fab">
+        <md-icon md-font-set="material-icons" ng-click="processPhoto()"> camera_alt </md-icon>
+      </md-button>
+  </div>
