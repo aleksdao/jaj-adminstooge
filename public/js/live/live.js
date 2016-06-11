@@ -33,7 +33,7 @@ var sampleShow = {
   ]
 };
 
-app.controller('LiveCtrl', function($scope, socket, SequenceHandler){
+app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler){
   $scope.transportState = updateState(SequenceHandler);
   $scope.currentShow = sampleShow;
 
@@ -43,8 +43,14 @@ app.controller('LiveCtrl', function($scope, socket, SequenceHandler){
   SequenceHandler.loadSequence(sampleShow);
 
   $scope.restartShow = function(){
+
+    socket.emit('admin command', { message: 'send message', params: { text: 'Show is about to start!', duration: 1000 } });
+
     socket.emit('admin command', {message: 'send show', params:{ sequence: sampleShow } });
-    socket.emit('admin command', {message: 'play', params:{ startTime: 3000, sequence: sampleShow } });
+    $timeout(function(){
+      socket.emit('admin command', {message: 'play', params:{ startTime: 3000, sequence: sampleShow } });
+
+    }, 2000);
 
   };
 

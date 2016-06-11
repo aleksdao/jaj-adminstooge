@@ -101,12 +101,15 @@ adminNsp.on('connection', function(socket){
     clientNsp.emit(data.message, data.params);
   });
 
+  socket.on('photo added', function(data){
+    console.log('photo added', data);
+  });
+
 });
 
 /// SETUP CLIENT SOCKETS ///
 clientNsp.on('connection', function(socket){
 
-  console.log('client connected');
 
   socket.on('add user', function(userData){
     if(clientServerOnline){
