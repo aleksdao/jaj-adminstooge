@@ -4,7 +4,11 @@ app.config(function ($stateProvider) {
         url: '/admin',
         templateUrl: '/js/home/home.html',
         resolve: {
+          ipAddress: function(ipAddressFactory){
 
+            return ipAddressFactory.fetchIpAddresses();
+
+          }
 
         },
         controller: 'HomeCtrl'
@@ -23,7 +27,10 @@ app.directive('serverStats', function(){
   return {
     restrict: 'E',
     templateUrl: '/js/home/home.serverstats.html',
-    controller: 'ServerStatsCtrl'
+    controller: 'ServerStatsCtrl',
+    scope:{
+
+    }
   };
 });
 
@@ -61,14 +68,22 @@ app.controller('HomeCtrl', function($scope, socket){
 
 });
 
-app.controller('ServerStatsCtrl', function($scope, $interval, socket){
+app.controller('ServerStatsCtrl', function($scope, $interval, ipAddressFactory, socket){
   $scope.serverOnline = true;
   $scope.clientList = [];
+  $scope.data = { showDetails: false, showIP: ipAddressFactory.getSocketIP(), photoIP: ipAddressFactory.getPhotoIP()};
 
   socket.emit('get client list');
 
   $scope.toggleServerStatus = function(){
     socket.emit('toggle online status');
+  };
+
+  $scope.updateIp = function(){
+    ipAddressFactory.updateIP($scope.data.photoIP, $scope.data.showIP)
+    .then(function(){
+
+    });
   };
 
   //new users have joined server, update list
@@ -94,16 +109,33 @@ app.controller('HomeSequenceCtrl', function($scope, $state){
 
 });
 
-app.controller('HomeOneShotCtrl', function($scope, socket){
+app.controller('HomeOneShotCtrl', function($scope, socket, PhotoEventFactory){
 
   $scope.data = {};
+
+  $scope.photoEvent = {inProgress: false, count: 0};
 
   $scope.sendMessage = function(){
     socket.emit('admin command', { message: 'send message', params: { text: $scope.data.message, duration: 4000 } });
   };
 
   $scope.getPhoto = function(){
+    $scope.photoEvent.inProgress = true;
+
     socket.emit('admin command', { message: 'get photo', params: {  } });
+
+    PhotoEventFactory.startPhotoEvent();
+
   };
+
+  $scope.processPhoto = function(){
+    PhotoEventFactory.processPhotoEvent();
+  };
+
+  socket.on('photo added', function(data){
+
+    $scope.photoEvent.count = data.count;
+
+  });
 
 });

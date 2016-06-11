@@ -101,6 +101,10 @@ adminNsp.on('connection', function(socket){
     clientNsp.emit(data.message, data.params);
   });
 
+  socket.on('photo added', function(data){
+    adminNsp.emit('photo added', data);
+  });
+
 });
 
 /// SETUP CLIENT SOCKETS ///
