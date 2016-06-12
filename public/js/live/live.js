@@ -39,8 +39,6 @@ app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, S
 
   SongFactory.load('/assets/default.wav');
 
-  socket.startPingRepeat();
-
   SequenceHandler.init({container: '#previewWindow', title: '#previewTitle', body:'#previewBody'});
   SequenceHandler.loadSequence(sampleShow);
 

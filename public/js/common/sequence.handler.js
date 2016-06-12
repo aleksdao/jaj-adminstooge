@@ -109,7 +109,7 @@ app.factory('SequenceHandler', function($http, socket, SongFactory){
       //grab current time code position
       var currPos = Tone.Transport.position;
 
-      //start the song?
+      //start the audio?
       if(currPos === '0:0:0'){
         SongFactory.play();
       }
