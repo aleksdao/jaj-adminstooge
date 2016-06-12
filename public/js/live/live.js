@@ -33,11 +33,11 @@ var sampleShow = {
   ]
 };
 
-app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, ngAudio){
+app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, SongFactory){
   $scope.transportState = updateState(SequenceHandler);
   $scope.currentShow = sampleShow;
 
-  $scope.song = ngAudio.load('/assets/default.wav');
+  SongFactory.load('/assets/default.wav');
 
   socket.startPingRepeat();
 

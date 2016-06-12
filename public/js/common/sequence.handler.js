@@ -1,4 +1,4 @@
-app.factory('SequenceHandler', function($http, socket){
+app.factory('SequenceHandler', function($http, socket, SongFactory){
 
   var _sequence;
   var song;
@@ -89,9 +89,8 @@ app.factory('SequenceHandler', function($http, socket){
     getTransportState: function(){
       return Tone.Transport.state;
     },
-    queueStart: function(preRoll, adjustForLatency, songToPlay){
+    queueStart: function(preRoll, adjustForLatency){
       var startTime;
-      song = songToPlay;
 
       if(adjustForLatency)
         startTime = (preRoll - socket.getLatency()) / 1000;
@@ -112,17 +111,14 @@ app.factory('SequenceHandler', function($http, socket){
 
       //start the song?
       if(currPos === '0:0:0'){
-        song.currentTime = 0;
-
-        song.play();
-
+        SongFactory.play();
       }
 
       //check to see if the show is over, if so, stop Transport
       if (currPos == _sequence.getShowLength()){
         Tone.Transport.stop();
         Tone.Transport.position = 0;
-        song.pause();
+        SongFactory.stop();
         return;
       }
 
