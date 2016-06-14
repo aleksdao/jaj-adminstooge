@@ -82,7 +82,7 @@ app.controller('ServerStatsCtrl', function($scope, $interval, ipAddressFactory, 
   $scope.updateIp = function(){
     ipAddressFactory.updateIP($scope.data.photoIP, $scope.data.showIP)
     .then(function(){
-
+      
     });
   };
 
@@ -121,8 +121,8 @@ app.controller('HomeOneShotCtrl', function($scope, socket, PhotoEventFactory){
 
   $scope.getPhoto = function(){
     $scope.photoEvent.inProgress = true;
-
-    socket.emit('admin command', { message: 'get photo', params: {  } });
+    //send photoType 1 for selfie, and 0 photoType 0 for front facing
+    socket.emit('admin command', { message: 'get photo', params: { photoType: 0 } });
 
     PhotoEventFactory.startPhotoEvent();
 
