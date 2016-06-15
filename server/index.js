@@ -27,6 +27,7 @@ server.listen(3000, function(){
 app.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));
 app.use('/stylesheets', express.static(path.join(__dirname, '../public/stylesheets')));
+app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 
 
 /// MAIN ROUTE ///
@@ -102,7 +103,8 @@ adminNsp.on('connection', function(socket){
   });
 
   socket.on('photo added', function(data){
-    console.log('photo added', data);
+
+    adminNsp.emit('photo added', data);
   });
 
 });

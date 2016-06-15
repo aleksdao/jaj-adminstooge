@@ -33,11 +33,12 @@ var sampleShow = {
   ]
 };
 
-app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler){
+
+app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, SongFactory){
   $scope.transportState = updateState(SequenceHandler);
   $scope.currentShow = sampleShow;
 
-  socket.startPingRepeat();
+  SongFactory.load('/assets/default.wav');
 
   SequenceHandler.init({container: '#previewWindow', title: '#previewTitle', body:'#previewBody'});
   SequenceHandler.loadSequence(sampleShow);
@@ -47,15 +48,21 @@ app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler){
     socket.emit('admin command', { message: 'send message', params: { text: 'Show is about to start!', duration: 1000 } });
 
     socket.emit('admin command', {message: 'send show', params:{ sequence: sampleShow } });
+<<<<<<< HEAD
     $timeout(function(){
       socket.emit('admin command', {message: 'play', params:{ startTime: 3000, sequence: sampleShow } });
 
     }, 2000);
+=======
+>>>>>>> 8a7514ba0385d76d125d35288c35adca505c4873
 
+    $timeout(function(){
+      socket.emit('admin command', {message: 'play', params:{ startTime: 3000, sequence: sampleShow } });
+    }, 1000);
   };
 
   socket.on('play', function(data){
-    SequenceHandler.queueStart(data.startTime, true);
+    SequenceHandler.queueStart(data.startTime, true, $scope.song);
     $scope.transportState = updateState(SequenceHandler);
   });
 });

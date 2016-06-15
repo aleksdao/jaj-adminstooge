@@ -1,4 +1,4 @@
-var app = angular.module('jaj-admin', ['ui.router','ngMaterial']);
+var app = angular.module('jaj-admin', ['ui.router','ngMaterial','ngAudio']);
 
 
 app.config(function ($urlRouterProvider, $locationProvider, $mdThemingProvider) {
@@ -17,11 +17,14 @@ app.config(function ($urlRouterProvider, $locationProvider, $mdThemingProvider) 
 
 });
 
-app.run(function(socket){
+app.run(function(socket, ipAddressFactory){
 
   /// init admin socket connection ///
   socket.connect('/admin');
   socket.startPingRepeat(200);
   socket.emit('add admin', 'Admin');
+
+  //fetch server IP
+  ipAddressFactory.fetchIpAddresses();
 
 });

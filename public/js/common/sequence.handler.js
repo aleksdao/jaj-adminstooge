@@ -1,6 +1,7 @@
-app.factory('SequenceHandler', function($http, socket){
+app.factory('SequenceHandler', function($http, socket, SongFactory){
 
   var _sequence;
+  var song;
   var _screenElement = {
     container: undefined,
     title: undefined,
@@ -107,10 +108,17 @@ app.factory('SequenceHandler', function($http, socket){
     eventLoop: function(){
       //grab current time code position
       var currPos = Tone.Transport.position;
+
+      //start the audio?
+      if(currPos === '0:0:0'){
+        SongFactory.play();
+      }
+
       //check to see if the show is over, if so, stop Transport
       if (currPos == _sequence.getShowLength()){
         Tone.Transport.stop();
         Tone.Transport.position = 0;
+        SongFactory.stop();
         return;
       }
 

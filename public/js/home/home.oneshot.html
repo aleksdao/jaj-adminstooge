@@ -9,13 +9,16 @@
   </md-button>
   <br/>
 
-  <h1 class="md-title">Request Photo</h1>
-
-  <md-input-container>
-      <label>Seconds to wait</label>
-      <input ng-model="data.photoWaitTime" type="number">
-  </md-input-container>
+  <h1 class="md-title">Start Photo Event</h1>
 
   <md-button class="md-fab">
     <md-icon md-font-set="material-icons" ng-click="getPhoto()"> camera_alt </md-icon>
   </md-button>
+
+  <div ng-show="photoEvent.inProgress">
+    <p> Photos so far: {{ photoEvent.count }}
+
+      <md-button class="md-fab">
+        <md-icon md-font-set="material-icons" ng-click="processPhoto()"> camera_alt </md-icon>
+      </md-button>
+  </div>
