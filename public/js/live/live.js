@@ -41,18 +41,32 @@ app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, S
   $scope.currentShow = null;
   $scope.showList = showList;
   $scope.showList.push(sampleShow);
-  $scope.data = {toLoad:null};
+  $scope.data = {toLoad:null, ready: false};
 
   SongFactory.load('/assets/default.wav');
 
   SequenceHandler.init({container: '#previewWindow', title: '#previewTitle', body:'#previewBody'});
 
-  $scope.restartShow = function(){
-
+  $scope.startShow = function(){
     socket.emit('admin command', { message: 'send message', params: { text: 'Show is about to start!', duration: 1000 } });
-    $timeout(function(){
-      socket.emit('admin command', {message: 'play', params:{ startTime: 3000, sequence: sampleShow } });
-    }, 1000);
+    socket.emit('admin command', {message: 'play', params:{ startTime: $scope.data.startTime, sequence: $scope.currentShow } });
+  };
+
+  $scope.loadShow = function(){
+    //grab show from list
+    var newShow = $scope.showList[$scope.data.toLoad];
+
+    //load show to timeline
+    SequenceHandler.loadSequence(newShow);
+    $scope.currentShow = newShow;
+    $scope.data.ready = true;
+
+    //send show to clients
+    socket.emit('admin command', {message: 'send show', params:{ sequence: newShow } });
+  };
+  $scope.reset = function(){
+    $scope.data.startTime = null;
+    $scope.data.ready = false;
   };
 
   $scope.$watch('data.toLoad', function() {
@@ -67,8 +81,10 @@ app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, S
 
    });
 
+
+
   socket.on('play', function(data){
-    SequenceHandler.queueStart(data.startTime, true, $scope.song);
+    SequenceHandler.queueStart(data.startTime * 1000, true, $scope.song);
     $scope.transportState = updateState(SequenceHandler);
   });
 });

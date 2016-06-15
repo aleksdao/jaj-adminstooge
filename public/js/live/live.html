@@ -11,21 +11,40 @@
         <md-option ng-repeat="show in showList" value="{{$index}}"> {{ show.name }}
         </md-option>
       </md-select>
-    </md-input-container>
+      </md-input-container>
+      <br/>
 
+      <div ng-show="currentShow">
+      <md-input-container>
+          <label>Start Time (in seconds)</label>
+          <input ng-model="data.startTime" type="number">
+      </md-input-container>
+      <br/>
+      <div ng-show="data.startTime">
+      <md-button class="md-raised md-accent" ng-disabled="!data.startTime" ng-click="loadShow()"class="">
+        Queue Sequence
 
+        <md-icon md-font-set="material-icons"> arrow_forward </md-icon>
+      </md-button>
+      <br/>
+      <md-button class="md-warn" ng-disabled="!data.startTime" ng-click="reset()"class="">
+        Reset
+      </md-button>
+    </div>
+    </div>
   </div>
-  <div flex="33" ng-show="currentShow">
+  <div flex="33" ng-show="data.ready">
     <h1 class="md-title"> Staging </h1>
     <p>Current Show: {{ currentShow.name }}</p>
 
     <p>Transport State: {{ transportState }}</p>
 
-    <md-button class="md-raised" ng-click="restartShow()">Restart</md-button>
-
+    <md-button ng-disabled="!data.startTime" ng-click="startShow()"class="md-fab">
+      <md-icon md-font-set="material-icons"> play_arrow </md-icon>
+    </md-button>
 
   </div>
-  <div flex="33" ng-show="currentShow">
+  <div flex="33" ng-show="data.ready">
     <h1 class="md-title"> Live Preview </h1>
 
     <div id="previewWindow">

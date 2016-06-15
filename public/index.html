@@ -32,48 +32,15 @@
 </head>
 
 <body ng-app="jaj-admin" layout="column" id="main" ng-cloak>
-  <!-- <md-toolbar>
-  toolbar
-</md-toolbar>
-<div flex layout="row">
-  <md-sidenav flex="15" md-is-locked-open="true" class="md-whiteframe-z1">
-    <md-content>
-      <server-stats></server-stats>
-    </md-content>
-  </md-sidenav>
-  <div layout="column" flex>
-    <div class="box1">
-      <ui-view></ui-view>
-    </div>
-    <div class="box2">
-      fixed
-    </div>
-    <div class="box3">
-      flex
-    </div>
-  </div>
-
-</div> -->
-<!-- <md-toolbar class="md-accent">
-  <div class="md-toolbar-tools">
-
-  <h1 class="logo"> together </h1>
-
-        <md-button class="md-raised" aria-label="Learn More">
-          Learn More
-        </md-button>
-
-      </div>
-</md-toolbar> -->
 
 <div flex layout="row">
 
 <md-sidenav layout="column" class="sidenav1" md-is-locked-open='true'>
-  <h1 class="logo">together</h1>
+  <h1 ui-sref="home" class="logo">together</h1>
 
   <h3> Actions </h3>
   <md-button class="md-raised" ui-sref="livemode" ui-sref-active="md-accent"> Live Mode </md-button>
-  <md-button class="md-raised" ui-sref="home" ui-sref-active="md-accent"> One-Shot </md-button>
+  <md-button class="md-raised" ui-sref="oneshot" ui-sref-active="md-accent"> One-Shot </md-button>
 
   <br/><br/>
   <server-stats></server-stats>
@@ -81,8 +48,6 @@
   </md-sidenav>
 
  <md-content flex layout="column">
-
-
    <ui-view></ui-view>
  </md-content>
 

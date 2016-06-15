@@ -1,17 +1,12 @@
 /// HOME STATES ///
 app.config(function ($stateProvider) {
-    $stateProvider.state('home', {
-        url: '/admin',
-        templateUrl: '/js/home/home.html',
+    $stateProvider.state('oneshot', {
+        url: '/oneshot',
+        templateUrl: '/js/home/oneshot.html',
         resolve: {
-          ipAddress: function(ipAddressFactory){
-
-            return ipAddressFactory.fetchIpAddresses();
-
-          }
 
         },
-        controller: 'HomeCtrl'
+        controller: 'OneShotCtrl'
     });
 });
 
@@ -54,7 +49,7 @@ app.directive('actionSequence', function(){
 });
 
 /// HOME CONTROLLERS ///
-app.controller('HomeCtrl', function($scope, socket){
+app.controller('OneShotCtrl', function($scope, socket){
 
   $scope.event = {};
   $scope.msgLog = [];
@@ -73,6 +68,11 @@ app.controller('ServerStatsCtrl', function($scope, $interval, ipAddressFactory, 
   $scope.clientList = [];
   $scope.data = { showDetails: false, showIP: ipAddressFactory.getSocketIP(), photoIP: ipAddressFactory.getPhotoIP()};
 
+  ipAddressFactory.fetchIpAddresses()
+  .then(function(){
+    $scope.data = { showDetails: false, showIP: ipAddressFactory.getSocketIP(), photoIP: ipAddressFactory.getPhotoIP()};
+  });
+  
   socket.emit('get client list');
 
   $scope.toggleServerStatus = function(){
@@ -82,7 +82,7 @@ app.controller('ServerStatsCtrl', function($scope, $interval, ipAddressFactory, 
   $scope.updateIp = function(){
     ipAddressFactory.updateIP($scope.data.photoIP, $scope.data.showIP)
     .then(function(){
-      
+
     });
   };
 
