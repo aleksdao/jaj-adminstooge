@@ -1,4 +1,4 @@
-app.factory('SequenceHandler', function($http, socket, SongFactory){
+app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
 
   var _sequence;
   var song;
@@ -96,7 +96,7 @@ app.factory('SequenceHandler', function($http, socket, SongFactory){
       else
         startTime = preRoll / 1000;
 
-      this.stop(); //reset start time
+      //this.stop(); //reset start time
 
       Tone.Transport.start("+" + startTime); //start Transport
     },
@@ -107,10 +107,10 @@ app.factory('SequenceHandler', function($http, socket, SongFactory){
     eventLoop: function(){
       //grab current time code position
       var currPos = Tone.Transport.position;
-
       //start the audio?
       if(currPos === '0:0:0'){
         SongFactory.play();
+        $rootScope.$broadcast('show started');
       }
 
       //check to see if the show is over, if so, stop Transport
@@ -118,6 +118,8 @@ app.factory('SequenceHandler', function($http, socket, SongFactory){
         Tone.Transport.stop();
         Tone.Transport.position = 0;
         SongFactory.stop();
+        $rootScope.$broadcast('show ended');
+
         return;
       }
 

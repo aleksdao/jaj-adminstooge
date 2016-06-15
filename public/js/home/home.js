@@ -24,7 +24,6 @@ app.directive('serverStats', function(){
     templateUrl: '/js/home/home.serverstats.html',
     controller: 'ServerStatsCtrl',
     scope:{
-
     }
   };
 });
@@ -72,7 +71,7 @@ app.controller('ServerStatsCtrl', function($scope, $interval, ipAddressFactory, 
   .then(function(){
     $scope.data = { showDetails: false, showIP: ipAddressFactory.getSocketIP(), photoIP: ipAddressFactory.getPhotoIP()};
   });
-  
+
   socket.emit('get client list');
 
   $scope.toggleServerStatus = function(){

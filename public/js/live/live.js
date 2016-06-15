@@ -36,7 +36,7 @@ var sampleShow = {
 };
 
 
-app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, SongFactory, showList){
+app.controller('LiveCtrl', function($scope, $timeout, $rootScope, socket, SequenceHandler, SongFactory, showList){
   $scope.transportState = updateState(SequenceHandler);
   $scope.currentShow = null;
   $scope.showList = showList;
@@ -48,8 +48,7 @@ app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, S
   SequenceHandler.init({container: '#previewWindow', title: '#previewTitle', body:'#previewBody'});
 
   $scope.startShow = function(){
-    socket.emit('admin command', { message: 'send message', params: { text: 'Show is about to start!', duration: 1000 } });
-    socket.emit('admin command', {message: 'play', params:{ startTime: $scope.data.startTime, sequence: $scope.currentShow } });
+    socket.emit('admin command', {message: 'play', params:{ startTime: $scope.data.startTime * 1000, sequence: $scope.currentShow } });
   };
 
   $scope.loadShow = function(){
@@ -64,6 +63,7 @@ app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, S
     //send show to clients
     socket.emit('admin command', {message: 'send show', params:{ sequence: newShow } });
   };
+
   $scope.reset = function(){
     $scope.data.startTime = null;
     $scope.data.ready = false;
@@ -74,19 +74,24 @@ app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, S
       var newShow = $scope.showList[$scope.data.toLoad];
       if(newShow){
         $scope.currentShow = newShow;
-        console.log(newShow);
-        SequenceHandler.loadSequence(newShow);
-
       }
 
    });
 
-
+  //handle sockets
+  $rootScope.$on("show started", function(){
+    $scope.transportState = "started";
+  });
+  $rootScope.$on("show ended", function(){
+    $scope.transportState = "stopped";
+    $scope.reset();
+  });
 
   socket.on('play', function(data){
-    SequenceHandler.queueStart(data.startTime * 1000, true, $scope.song);
+    SequenceHandler.queueStart(data.startTime, true, $scope.song);
     $scope.transportState = updateState(SequenceHandler);
   });
+
 });
 
 function updateState(SequenceHandler){
@@ -95,4 +100,4 @@ function updateState(SequenceHandler){
 
 function randColor(){
   return '#' + Math.random().toString(16).slice(2, 8).toUpperCase();
-};
+}
