@@ -26,8 +26,7 @@ body {
 }
 
 md-sidenav  {
-  width: 200px; height:100%;
-  min-width: 100px;
+  width: 250px; height:100%;
   padding:0px;
   text-align: center;
 }
@@ -36,10 +35,12 @@ md-content {
   height:100%;
   padding:20px;
 }
+
 server-stats{
   margin: 0 auto;
+  text-align: center;
 }
-.server-stats{
+.server-stats-client{
   font-size: 80px;
   text-align: center;
   margin:0px;

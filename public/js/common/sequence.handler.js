@@ -59,7 +59,6 @@ app.factory('SequenceHandler', function($http, socket, SongFactory){
 
     },
     loadSequence: function(sequence){
-
       //set Transport settings (tempo, time sig, etc)
       Tone.Transport.set(sequence.settings);
 
@@ -127,6 +126,7 @@ app.factory('SequenceHandler', function($http, socket, SongFactory){
 
         if (!event.preload) {
           _actionFunc[event.action](event.params);
+
         }
       });
 
@@ -166,6 +166,7 @@ Sequence.prototype.generateTimeline = function(){
     var self = this;
 
     this._sequence.events.forEach(function(event) {
+
         self.timeline.addEvent(event);
     });
 

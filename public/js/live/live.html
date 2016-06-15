@@ -1,21 +1,37 @@
+<h1> Live Mode </h1>
+
 <div layout="row">
 
-  <div flex="66">
-    <h1> Live Mode </h1>
+  <div flex="33">
+    <h1 class="md-title">Queue Sequence</h1>
+
+    <md-input-container>
+      <label>Select sequence</label>
+      <md-select ng-model="data.toLoad">
+        <md-option ng-repeat="show in showList" value="{{$index}}"> {{ show.name }}
+        </md-option>
+      </md-select>
+    </md-input-container>
+
+
+  </div>
+  <div flex="33" ng-show="currentShow">
+    <h1 class="md-title"> Staging </h1>
     <p>Current Show: {{ currentShow.name }}</p>
 
     <p>Transport State: {{ transportState }}</p>
 
     <md-button class="md-raised" ng-click="restartShow()">Restart</md-button>
+
+
+  </div>
+  <div flex="33" ng-show="currentShow">
+    <h1 class="md-title"> Live Preview </h1>
+
     <div id="previewWindow">
       <h3 id="previewTitle"> {{ screenText.previewTitle }} </h3>
       <p id="previewBody"> {{ screenText.previewBody }} </p>
     </div>
-
-  </div>
-
-  <div flex="33">
-    <server-stats></server-stats>
   </div>
 
 </div>

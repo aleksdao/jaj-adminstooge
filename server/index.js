@@ -29,12 +29,6 @@ app.use('/js', express.static(path.join(__dirname, '../public/js')));
 app.use('/stylesheets', express.static(path.join(__dirname, '../public/stylesheets')));
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 
-
-/// MAIN ROUTE ///
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '../public/client.html'));
-});
-
 /// MAIN ROUTE ///
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, '../public/index.html'));

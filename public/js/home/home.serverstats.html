@@ -1,19 +1,21 @@
-<h1 class="md-headline">Stats</h1>
 
 <div flex>
-    <md-switch ng-model="serverOnline" ng-click="toggleServerStatus()">
-        Server Active
-    </md-switch>
-    <p class="server-stats">{{ clientList.length }} </p>
+  
+    <p class="server-stats-client">{{ clientList.length }} </p>
     <p> clients connected </p>
+
+
     <ul>
         <li ng-repeat="client in clientList track by $index"> {{ client.userData.name }} </li>
     </ul>
-
-  <md-button class="md-raised" ng-click="data.showDetails = !data.showDetails"> Toggle Advanced </md-button>
-
+  <md-button class="md-fab md-raised" ng-click="data.showDetails = !data.showDetails">
+    <md-icon md-font-set="material-icons"> settings </md-icon>
+  </md-button>
   <div ng-show="data.showDetails">
     <br/>
+    <md-switch ng-model="serverOnline" ng-click="toggleServerStatus()">
+        Server Active
+    </md-switch>
     <form name="ipForm">
       <md-input-container class="md-block">
           <label>Show Server IP</label>
