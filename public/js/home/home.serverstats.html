@@ -4,10 +4,8 @@
     <md-switch ng-model="serverOnline" ng-click="toggleServerStatus()">
         Server Active
     </md-switch>
-
-
-    <h3> Live Show State: {{ transportState }}
-  <h3> Client List </h3> {{ clientList.length }} clients connected
+    <p class="server-stats">{{ clientList.length }} </p>
+    <p> clients connected </p>
     <ul>
         <li ng-repeat="client in clientList track by $index"> {{ client.userData.name }} </li>
     </ul>

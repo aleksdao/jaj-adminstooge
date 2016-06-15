@@ -47,15 +47,6 @@ app.controller('LiveCtrl', function($scope, $timeout, socket, SequenceHandler, S
 
     socket.emit('admin command', { message: 'send message', params: { text: 'Show is about to start!', duration: 1000 } });
 
-    socket.emit('admin command', {message: 'send show', params:{ sequence: sampleShow } });
-<<<<<<< HEAD
-    $timeout(function(){
-      socket.emit('admin command', {message: 'play', params:{ startTime: 3000, sequence: sampleShow } });
-
-    }, 2000);
-=======
->>>>>>> 8a7514ba0385d76d125d35288c35adca505c4873
-
     $timeout(function(){
       socket.emit('admin command', {message: 'play', params:{ startTime: 3000, sequence: sampleShow } });
     }, 1000);
