@@ -1,6 +1,7 @@
 app.factory('PhotoEventFactory', function($http, ipAddressFactory){
 
   var inProgress = false;
+  var currShow = null;
 
   return {
 
@@ -13,6 +14,7 @@ app.factory('PhotoEventFactory', function($http, ipAddressFactory){
         return;
 
       inProgress = true;
+      currShow = showName;
 
       return $http.post(ipAddressFactory.getPhotoIP()+'/api/photo/initPhotoShow', {token: 'bootsNCats', photoEventName: showName})
       .then(function(res){
@@ -29,6 +31,12 @@ app.factory('PhotoEventFactory', function($http, ipAddressFactory){
 
       });
 
+    },
+    getStatus: function(){
+      return inProgress;
+    },
+    getName: function(){
+      return currShow;
     }
   };
 

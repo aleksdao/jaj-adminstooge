@@ -96,8 +96,6 @@ app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
       else
         startTime = preRoll / 1000;
 
-      //this.stop(); //reset start time
-
       Tone.Transport.start("+" + startTime); //start Transport
     },
     stop: function(){
@@ -115,9 +113,9 @@ app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
 
       //check to see if the show is over, if so, stop Transport
       if (currPos == _sequence.getShowLength()){
+        SongFactory.stop();
         Tone.Transport.stop();
         Tone.Transport.position = 0;
-        SongFactory.stop();
         $rootScope.$broadcast('show ended');
 
         return;

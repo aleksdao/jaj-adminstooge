@@ -1,13 +1,9 @@
 
 <div flex>
-  
+
     <p class="server-stats-client">{{ clientList.length }} </p>
     <p> clients connected </p>
 
-
-    <ul>
-        <li ng-repeat="client in clientList track by $index"> {{ client.userData.name }} </li>
-    </ul>
   <md-button class="md-fab md-raised" ng-click="data.showDetails = !data.showDetails">
     <md-icon md-font-set="material-icons"> settings </md-icon>
   </md-button>
