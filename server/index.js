@@ -29,12 +29,6 @@ app.use('/js', express.static(path.join(__dirname, '../public/js')));
 app.use('/stylesheets', express.static(path.join(__dirname, '../public/stylesheets')));
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 
-
-/// MAIN ROUTE ///
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '../public/client.html'));
-});
-
 /// MAIN ROUTE ///
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, '../public/index.html'));
@@ -103,6 +97,7 @@ adminNsp.on('connection', function(socket){
   });
 
   socket.on('photo added', function(data){
+
     adminNsp.emit('photo added', data);
   });
 
@@ -111,7 +106,6 @@ adminNsp.on('connection', function(socket){
 /// SETUP CLIENT SOCKETS ///
 clientNsp.on('connection', function(socket){
 
-  console.log('client connected');
 
   socket.on('add user', function(userData){
     if(clientServerOnline){

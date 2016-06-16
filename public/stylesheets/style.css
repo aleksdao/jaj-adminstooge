@@ -1,6 +1,13 @@
 body {
   margin: auto;
   width: 100%;
+  font-family: 'Raleway', sans-serif;
+}
+
+.logo {
+  font-weight: 200;
+  font-size: 40px;
+  text-align: center;
 }
 
 #previewWindow {
@@ -16,4 +23,26 @@ body {
 
 #previewBody {
   padding-top: 20px;
+}
+
+md-sidenav  {
+  width: 220px; height:100%;
+  padding:0px;
+  text-align: center;
+}
+
+md-content {
+  height:100%;
+  padding:20px;
+}
+
+server-stats{
+  margin: 0 auto;
+  text-align: center;
+}
+.server-stats-client{
+  font-size: 70px;
+  text-align: center;
+  margin:0px;
+  padding: 0px;
 }

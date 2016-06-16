@@ -1,4 +1,4 @@
-app.factory('SequenceHandler', function($http, socket, SongFactory){
+app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
 
   var _sequence;
   var song;
@@ -59,7 +59,6 @@ app.factory('SequenceHandler', function($http, socket, SongFactory){
 
     },
     loadSequence: function(sequence){
-
       //set Transport settings (tempo, time sig, etc)
       Tone.Transport.set(sequence.settings);
 
@@ -97,8 +96,6 @@ app.factory('SequenceHandler', function($http, socket, SongFactory){
       else
         startTime = preRoll / 1000;
 
-      this.stop(); //reset start time
-
       Tone.Transport.start("+" + startTime); //start Transport
     },
     stop: function(){
@@ -108,17 +105,19 @@ app.factory('SequenceHandler', function($http, socket, SongFactory){
     eventLoop: function(){
       //grab current time code position
       var currPos = Tone.Transport.position;
-
       //start the audio?
       if(currPos === '0:0:0'){
         SongFactory.play();
+        $rootScope.$broadcast('show started');
       }
 
       //check to see if the show is over, if so, stop Transport
       if (currPos == _sequence.getShowLength()){
+        SongFactory.stop();
         Tone.Transport.stop();
         Tone.Transport.position = 0;
-        SongFactory.stop();
+        $rootScope.$broadcast('show ended');
+
         return;
       }
 
@@ -127,6 +126,7 @@ app.factory('SequenceHandler', function($http, socket, SongFactory){
 
         if (!event.preload) {
           _actionFunc[event.action](event.params);
+
         }
       });
 
@@ -166,6 +166,7 @@ Sequence.prototype.generateTimeline = function(){
     var self = this;
 
     this._sequence.events.forEach(function(event) {
+
         self.timeline.addEvent(event);
     });
 
