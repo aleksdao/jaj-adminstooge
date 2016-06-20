@@ -1,6 +1,7 @@
 function SocketList(maxConnections){
   this._socketList = [];
   this.maxConnections = maxConnections || Infinity;
+  this.lastRandom = -1;
 }
 
 SocketList.prototype.addUser = function(socketId, data){
@@ -40,11 +41,30 @@ SocketList.prototype.reset = function(socketList){
 };
 
 SocketList.prototype.randomUser = function(){
-  console.log(this._socketList)
-  var random = Math.floor(Math.random() * this._socketList.length);
-  //console.log(this._socketList[random])
-  return this._socketList[random];
 
+  var working = true;
+  var winner;
+
+  if(this._socketList.length<=1)
+    return this._socketList[0];
+
+  //loop through till we have a new winner
+  while(working){
+    //pick new random
+    var random = Math.floor(Math.random() * this._socketList.length);
+
+    if(this.lastRandom == random){
+      //keep looking
+    } else {
+      winner = random;
+      this.lastRandom = winner;
+      working = false;
+    }
+
+  }
+
+  //found one
+  return this._socketList[winner];
 };
 
 

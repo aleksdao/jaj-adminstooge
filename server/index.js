@@ -105,8 +105,8 @@ adminNsp.on('connection', function(socket){
     var winner = userList.randomUser();
 
     if(winner){
-      io.to(winner.id).emit('send message', data.params.text);
-      console.log('SENT',data.params.text)
+      clientNsp.to(winner.id).emit('contest winner', data.params.text);
+
     }
 
   });
@@ -116,12 +116,10 @@ adminNsp.on('connection', function(socket){
 /// SETUP CLIENT SOCKETS ///
 clientNsp.on('connection', function(socket){
 
-
   socket.on('add user', function(userData){
     if(clientServerOnline){
+
       userList.addUser(socket.id, userData);
-      io.to(socket.id).emit('get photo');
-      console.log(io.to(socket.id).emit)
       //let the admin know!
       adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
     }
