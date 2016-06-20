@@ -79,8 +79,11 @@ app.controller('PhotoEventCtrl', function($scope, socket, PhotoEventFactory){
   $scope.getPhoto = function(){
     $scope.photoEvent.inProgress = true;
     $scope.photoEvent.currShow = $scope.data.eventName;
+
+    var mode = +$scope.data.cameraMode;
+
     //send photoType 1 for selfie, and 0 photoType 0 for front facing
-    socket.emit('admin command', { message: 'get photo', params: { photoType: $scope.data.cameraMode } });
+    socket.emit('admin command', { message: 'get photo', params: { photoType: mode } });
 
     PhotoEventFactory.startPhotoEvent($scope.data.eventName);
 
