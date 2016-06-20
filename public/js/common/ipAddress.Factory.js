@@ -19,9 +19,9 @@ app.factory('ipAddressFactory', function ($http) {
       return 'http://' + socketIP;
     },
     updateIP: function(photoIP, socketIP){
-      return $http.put('https://nsync-dns.herokuapp.com/photo?photoIP=' + photoIP)
+      return $http.post('https://nsync-dns.herokuapp.com/photo?photoIP=' + photoIP.slice(7))
       .then(function(){
-        return $http.put('https://nsync-dns.herokuapp.com/socket?socketIP=' + socketIP);
+        return $http.post('https://nsync-dns.herokuapp.com/socket?socketIP=' + socketIP.slice(7));
       });
     }
   };
