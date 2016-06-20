@@ -23,7 +23,7 @@ app.run(function(socket, ipAddressFactory){
   socket.connect('/admin');
   socket.startPingRepeat(200);
   socket.emit('add admin', 'Admin');
-
+  socket.emit('get client list');
 });
 
 app.config(function ($stateProvider) {

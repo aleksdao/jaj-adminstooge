@@ -10,6 +10,7 @@ app.config(function ($stateProvider) {
     });
 });
 
+
 app.config(function ($stateProvider) {
     $stateProvider.state('oneshot.photo', {
         url: '/photo',

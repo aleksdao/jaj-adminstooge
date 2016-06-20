@@ -104,17 +104,25 @@ adminNsp.on('connection', function(socket){
     adminNsp.emit('photo added', data);
   });
 
+  socket.on('contest random', function(data){
+    var winner = userList.randomUser();
+
+    if(winner){
+      clientNsp.to(winner.id).emit('contest winner', data.params.text);
+
+    }
+
+  });
+
 });
 
 /// SETUP CLIENT SOCKETS ///
 clientNsp.on('connection', function(socket){
 
-
   socket.on('add user', function(userData){
     if(clientServerOnline){
-      userList.addUser(socket.id, userData);
-      clientNsp.emit('welcome');
 
+      userList.addUser(socket.id, userData);
       //let the admin know!
       adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
     }
