@@ -39,6 +39,14 @@ SocketList.prototype.reset = function(socketList){
   this._socketList = [];
 };
 
+SocketList.prototype.randomUser = function(){
+  console.log(this._socketList)
+  var random = Math.floor(Math.random() * this._socketList.length);
+  //console.log(this._socketList[random])
+  return this._socketList[random];
+
+};
+
 
 
 module.exports = SocketList;

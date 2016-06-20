@@ -115,12 +115,16 @@ app.controller('MsgEventCtrl', function($scope, socket){
 
 app.controller('ContestEventCtrl', function($scope, socket){
 
-  $scope.data = {};
+  $scope.data = { inProgress: false, lastWinner:undefined, message:undefined };
 
   $scope.sendMessage = function(){
-    socket.emit('admin command', { message: 'send message', params: { text: $scope.data.message, duration: 4000 } });
+    socket.emit('contest random', { params: { text: $scope.data.message } });
     $scope.data.message = null;
   };
+
+  socket.on('winner name', function(data){
+
+  });
 });
 
 app.controller('HomeOneShotCtrl', function($scope, socket, PhotoEventFactory){
