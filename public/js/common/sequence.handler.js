@@ -42,8 +42,8 @@ app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
   }
   function resetScreen(){
     _screenElement.container.css('background-color', '#eee');
-    _screenElement.title.text('');
-    _screenElement.body.text('');
+    _screenElement.title.text(' ');
+    _screenElement.body.text(' ');
   }
 
   // sets CSS transiton time
