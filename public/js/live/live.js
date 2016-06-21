@@ -14,23 +14,50 @@ app.config(function ($stateProvider) {
 
 /// sample show
 var sampleShow = {
-  show_length:'2:0:0',
-  name: 'Sample oo',
+  show_length:'25:0:0',
+  name: 'Together Demo - Wander by Startank',
   settings:{
-    bpm: 120,
+    bpm: 83,
     resolution:'16n',
     time_sig: 4
   },
   events:[
-    {time: '0:0:0', action: 'changeColor', params: {color: randColor()}},
-    {time: '0:1:0', action: 'changeColor', params: {color: randColor()}},
-    {time: '0:2:0', action: 'changeColor', params: {color: randColor()}},
-    {time: '0:3:0', action: 'changeColor', params: {color: randColor()}},
-    {time: '0:3:0', action: 'changeText', params: {text: 'hey there', target:'title', color: randColor()}},
+    {time: '0:0:0', action: 'changeText', params: {text: 'Wander', target:'title'}},
+    {time: '0:0:0', action: 'changeText', params: {text: 'by Startank', target:'body'}},
+    {time: '0:1:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
+    {time: '0:2:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
+    {time: '0:3:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
+    {time: '1:0:0', action: 'changeText', params: {text: ' ', target:'title'}},
+    {time: '1:0:0', action: 'changeText', params: {text: ' ', target:'body'}},
     {time: '1:0:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
     {time: '1:1:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
     {time: '1:2:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
     {time: '1:3:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
+    {time: '2:0:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '2:1:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '2:2:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '2:3:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '3:0:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '3:1:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '3:2:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '3:3:0', action: 'changeColor', params: {color: randColor()}},
+    {time: '3:0:0', action: 'changeText', params: {text: 'W', target:'title'}},
+    {time: '3:1:0', action: 'changeText', params: {text: 'Wa', target:'title'}},
+    {time: '3:2:0', action: 'changeText', params: {text: 'Wan', target:'title'}},
+    {time: '3:3:0', action: 'changeText', params: {text: 'Wander', target:'title'}},
+    {time: '4:0:0', action: 'changeText', params: {text: ' ', target:'title'}},
+    {time: '4:0:0', action: 'changeColor', params: {color: '#202020'}},
+    {time: '4:3:0', action: 'fadeColorTo', preload:true, params: {color: randColor()}},
+    {time: '5:0:0', action: 'changeColor', params: {color: '#202020'}},
+    {time: '5:3:0', action: 'changeColor', params: {color: randColor()}},
+
+    {time: '6:0:0', action: 'changeColor', params: {color: '#202020'}},
+    {time: '6:3:0', action: 'changeColor', params: {color: randColor()}},
+
+    {time: '7:0:0', action: 'changeColor', params: {color: '#202020'}},
+    {time: '7:3:0', action: 'changeColor', params: {color: randColor()}},
+
+
 
   ]
 };
@@ -43,7 +70,7 @@ app.controller('LiveCtrl', function($scope, $timeout, $rootScope, socket, Sequen
   $scope.showList.push(sampleShow);
   $scope.data = {toLoad:null, ready: false};
 
-  SongFactory.load('/assets/default.wav');
+  SongFactory.load('/assets/together_demo.mp3');
 
   SequenceHandler.init({container: '#previewWindow', title: '#previewTitle', body:'#previewBody'});
 

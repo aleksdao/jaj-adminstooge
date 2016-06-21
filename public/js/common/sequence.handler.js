@@ -111,6 +111,7 @@ app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
         $rootScope.$broadcast('show started');
       }
 
+      console.log(currPos)
       //check to see if the show is over, if so, stop Transport
       if (currPos == _sequence.getShowLength()){
         SongFactory.stop();
