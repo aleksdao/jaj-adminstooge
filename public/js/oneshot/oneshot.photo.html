@@ -1,4 +1,5 @@
 <md-content>
+
   <div ng-hide="photoEvent.inProgress">
 
     <h1 class="md-title">Create New Photo Event</h1>
@@ -31,5 +32,15 @@
         Process
       </md-button>
   </div>
+  <br/>
+  <div ng-show="data.photoUrl">
+    <h3> There is a recent show available.</h3>
 
+    <md-button ng-click="viewPhotoShow()">
+      View Photo Show
+    </md-button>
+    <md-button ng-click="sendPhotoShow()">
+      Send Photo Show
+    </md-button>
+  </div>
 </md-content>

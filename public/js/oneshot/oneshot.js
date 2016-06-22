@@ -70,7 +70,7 @@ app.controller('HomeSequenceCtrl', function($scope, $state){
 
 });
 
-app.controller('PhotoEventCtrl', function($scope, socket, PhotoEventFactory){
+app.controller('PhotoEventCtrl', function($scope, $window, socket, PhotoEventFactory, ipAddressFactory){
 
   $scope.data = {};
 
@@ -96,8 +96,21 @@ app.controller('PhotoEventCtrl', function($scope, socket, PhotoEventFactory){
 
   };
 
+  $scope.viewPhotoShow = function(){
+    $window.open($scope.data.photoUrl, '_blank');
+  };
+
+  $scope.sendPhotoShow = function(){
+    socket.emit('admin command', { message: 'view photo event', params: { url: $scope.data.photoUrl } });
+  };
+
   socket.on('photo added', function(data){
     $scope.photoEvent.count = data.count;
+  });
+
+  socket.on('photo process done', function(data){
+    console.log('photo event', data.directURL);
+    $scope.data.photoUrl = ipAddressFactory.getPhotoIP() + data.directURL;
   });
 
 
@@ -127,7 +140,7 @@ app.controller('ContestEventCtrl', function($scope, socket){
   });
 });
 
-app.controller('HomeOneShotCtrl', function($scope, socket, PhotoEventFactory){
+app.controller('HomeOneShotCtrl', function($scope, socket, PhotoEventFactory, ipAddressFactory){
 
   $scope.data = {};
 
@@ -155,5 +168,7 @@ app.controller('HomeOneShotCtrl', function($scope, socket, PhotoEventFactory){
     $scope.photoEvent.count = data.count;
 
   });
+
+
 
 });
