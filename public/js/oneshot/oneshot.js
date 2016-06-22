@@ -108,7 +108,7 @@ app.controller('MsgEventCtrl', function($scope, socket){
   $scope.data = {};
 
   $scope.sendMessage = function(){
-    socket.emit('admin command', { message: 'send message', params: { text: $scope.data.message, duration: 100 } });
+    socket.emit('admin command', { message: 'send message', params: { text: $scope.data.message, duration: 1500 } });
     $scope.data.message = null;
   };
 });
