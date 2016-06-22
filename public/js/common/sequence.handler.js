@@ -42,8 +42,8 @@ app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
   }
   function resetScreen(){
     _screenElement.container.css('background-color', '#eee');
-    _screenElement.title.text('');
-    _screenElement.body.text('');
+    _screenElement.title.text(' ');
+    _screenElement.body.text(' ');
   }
 
   // sets CSS transiton time
@@ -111,6 +111,7 @@ app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
         $rootScope.$broadcast('show started');
       }
 
+      console.log(currPos)
       //check to see if the show is over, if so, stop Transport
       if (currPos == _sequence.getShowLength()){
         SongFactory.stop();
