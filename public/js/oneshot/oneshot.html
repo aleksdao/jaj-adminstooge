@@ -1,0 +1,34 @@
+
+<h1> One-Shot </h1>
+
+<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+  <md-nav-item md-nav-sref="oneshot.photo"name="photo">
+    <md-icon md-font-set="material-icons" ng-click="processPhoto()"> camera_alt </md-icon>
+    Photo Event
+  </md-nav-item>
+  <md-nav-item md-nav-sref="oneshot.message" name="message">
+    <md-icon md-font-set="material-icons" ng-click="processPhoto()"> chat </md-icon>
+    Send Message
+  </md-nav-item>
+  <md-nav-item md-nav-sref="oneshot.contest" name="contest">
+    <md-icon md-font-set="material-icons"  ng-click="processPhoto()"> gamepad </md-icon>
+    Contest
+  </md-nav-item>
+</md-nav-bar>
+
+
+
+<!-- <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="never">
+  <md-tab label="Message">
+    <md-content class="md-padding">
+      <action-oneshot></action-oneshot>
+    </md-content>
+  </md-tab>
+  <md-tab label="Photo Event">
+    <md-content class="md-padding">
+      <action-sequence></action-sequence>
+    </md-content>
+  </md-tab>
+</md-tabs> -->
+
+<ui-view></ui-view>

@@ -1,0 +1,12 @@
+<md-content>
+  <h1 class="md-title">Pick a Random Winner</h1>
+
+  <md-input-container>
+      <label>Winning Message</label>
+      <input ng-model="data.message" type="text">
+  </md-input-container>
+  <br/>
+  <md-button ng-disabled="!data.message" class="md-fab" ng-click="sendMessage()">
+      <md-icon md-font-set="material-icons"> arrow_forward </md-icon>
+  </md-button>
+</md-content>

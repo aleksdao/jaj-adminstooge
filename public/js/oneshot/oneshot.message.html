@@ -1,0 +1,12 @@
+<md-content>
+  <h1 class="md-title">Send Message</h1>
+
+<md-input-container>
+    <label>Message</label>
+    <input ng-model="data.message" type="text">
+</md-input-container>
+<br/>
+<md-button ng-disabled="!data.message" class="md-fab" ng-click="sendMessage()">
+  <md-icon md-font-set="material-icons"> chat </md-icon>
+</md-button>
+</md-content>

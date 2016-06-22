@@ -1,0 +1,46 @@
+<md-content>
+
+  <div ng-hide="photoEvent.inProgress">
+
+    <h1 class="md-title">Create New Photo Event</h1>
+
+    <br/>
+
+    <md-input-container class="md-block">
+        <label>Photo Event Name</label>
+        <input ng-model="data.eventName" type="textarea">
+    </md-input-container>
+
+    <md-radio-group ng-model="data.cameraMode">
+       <md-radio-button value=0> Event Shot </md-radio-button>
+       <md-radio-button value=1>Selfie</md-radio-button>
+     </md-radio-group>
+
+    <md-button ng-click="getPhoto()" ng-disabled="!data.eventName || !data.cameraMode" class="md-accent md-raised">
+      Go!
+    </md-button>
+  </div>
+  <div ng-show="photoEvent.inProgress">
+    <h1 class="md-title">Photo Event in Progress</h1>
+    <p> Event Name: {{ photoEvent.currShow }}  </p>
+
+    <p> Photos received:  </p>
+
+    <p style="font-size:70px; margin: 0">{{ photoEvent.count }} </p>
+    <br/>
+      <md-button ng-click="processPhoto()" class="md-raised md-warn">
+        Process
+      </md-button>
+  </div>
+  <br/>
+  <div ng-show="data.photoUrl">
+    <h3> There is a recent show available.</h3>
+
+    <md-button ng-click="viewPhotoShow()">
+      View Photo Show
+    </md-button>
+    <md-button ng-click="sendPhotoShow()">
+      Send Photo Show
+    </md-button>
+  </div>
+</md-content>

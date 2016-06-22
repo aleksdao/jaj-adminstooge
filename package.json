@@ -28,8 +28,10 @@
     "bootstrap": "^3.3.6",
     "express": "^4.13.4",
     "morgan": "^1.7.0",
+    "ng-toast": "^2.0.0",
     "nodemon": "^1.9.2",
     "path": "^0.12.7",
+    "request": "^2.72.0",
     "socket.io": "^1.4.6",
     "swig": "^1.4.2",
     "tone": "^0.6.1"
