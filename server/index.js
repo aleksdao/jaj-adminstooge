@@ -104,6 +104,11 @@ adminNsp.on('connection', function(socket){
     adminNsp.emit('photo added', data);
   });
 
+  socket.on('photo process done', function(data){
+    console.log('admin socket');
+    adminNsp.emit('photo process done', data);
+  });
+
   socket.on('contest random', function(data){
     var winner = userList.randomUser();
 

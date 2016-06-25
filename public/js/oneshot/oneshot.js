@@ -70,7 +70,7 @@ app.controller('HomeSequenceCtrl', function($scope, $state){
 
 });
 
-app.controller('PhotoEventCtrl', function($scope, socket, PhotoEventFactory){
+app.controller('PhotoEventCtrl', function($scope, $window, socket, PhotoEventFactory, ipAddressFactory){
 
   $scope.data = {};
 
@@ -96,11 +96,27 @@ app.controller('PhotoEventCtrl', function($scope, socket, PhotoEventFactory){
 
   };
 
+  $scope.viewPhotoShow = function(){
+    $window.open($scope.data.photoUrl, '_blank');
+  };
+
+  $scope.sendPhotoShow = function(){
+    socket.emit('admin command', { message: 'view photo event', params: { url: $scope.data.photoUrl } });
+  };
+
   socket.on('photo added', function(data){
     $scope.photoEvent.count = data.count;
   });
 
-
+  socket.on('photo process done', function(data){
+    console.log('photo event', data);
+    // example package sent back [ { mosaicNum: 1, name: 'FunPhoto', mosaicURL: '/#photoMosaic/1' } ]
+    var photoIP = ipAddressFactory.getPhotoIP();
+    for (var i = 0; i < data.length; i++) {
+      data[i].mosaicURL = photoIP + data[i].mosaicURL;
+    }
+    $scope.data.mosaicInfo = data;
+  });
 });
 
 app.controller('MsgEventCtrl', function($scope, socket){
@@ -127,7 +143,7 @@ app.controller('ContestEventCtrl', function($scope, socket){
   });
 });
 
-app.controller('HomeOneShotCtrl', function($scope, socket, PhotoEventFactory){
+app.controller('HomeOneShotCtrl', function($scope, socket, PhotoEventFactory, ipAddressFactory){
 
   $scope.data = {};
 
@@ -155,5 +171,7 @@ app.controller('HomeOneShotCtrl', function($scope, socket, PhotoEventFactory){
     $scope.photoEvent.count = data.count;
 
   });
+
+
 
 });
