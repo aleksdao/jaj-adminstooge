@@ -107,7 +107,7 @@ app.controller('PhotoEventCtrl', function($scope, $rootScope, $window, socket, P
   };
 
   $scope.sendPhotoShow = function(showId){
-    socket.emit('admin command', { message: 'mosaic ready', params: PhotoEventFactory.getById(showId) });
+    socket.emit('admin command', { message: 'mosaic ready', params: PhotoEventFactory.getList() });
   };
 
   socket.on('photo added', function(data){
