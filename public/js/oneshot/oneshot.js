@@ -109,11 +109,14 @@ app.controller('PhotoEventCtrl', function($scope, $window, socket, PhotoEventFac
   });
 
   socket.on('photo process done', function(data){
-    console.log('photo event', data.directURL);
-    $scope.data.photoUrl = ipAddressFactory.getPhotoIP() + data.directURL;
+    console.log('photo event', data);
+    // example package sent back [ { mosaicNum: 1, name: 'FunPhoto', mosaicURL: '/#photoMosaic/1' } ]
+    var photoIP = ipAddressFactory.getPhotoIP();
+    for (var i = 0; i < data.length; i++) {
+      data[i].mosaicURL = photoIP + data[i].mosaicURL;
+    }
+    $scope.data.mosaicInfo = data;
   });
-
-
 });
 
 app.controller('MsgEventCtrl', function($scope, socket){

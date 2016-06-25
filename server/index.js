@@ -105,6 +105,7 @@ adminNsp.on('connection', function(socket){
   });
 
   socket.on('photo process done', function(data){
+    console.log('admin socket');
     adminNsp.emit('photo process done', data);
   });
 
