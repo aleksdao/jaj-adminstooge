@@ -1,7 +1,21 @@
-app.factory('PhotoEventFactory', function($http, ipAddressFactory){
+app.factory('PhotoEventFactory', function($http, $rootScope, ipAddressFactory, socket){
 
   var inProgress = false;
   var currShow = null;
+  var showList = null;
+
+  socket.on('photo process done', function(data){
+
+    var photoIP = ipAddressFactory.getPhotoIP();
+    for (var i = 0; i < data.length; i++) {
+      data[i].mosaicURL = photoIP + data[i].mosaicURL;
+    }
+    console.log('new list', data);
+    showList = data;
+    console.log('new list', showList);
+
+    $rootScope.$broadcast('photo event update', showList);
+  });
 
   return {
 
@@ -37,6 +51,12 @@ app.factory('PhotoEventFactory', function($http, ipAddressFactory){
     },
     getName: function(){
       return currShow;
+    },
+    getList: function(){
+      return showList;
+    },
+    getById: function(id){
+      return showList[id];
     }
   };
 

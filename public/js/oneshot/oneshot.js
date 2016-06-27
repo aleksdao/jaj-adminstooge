@@ -70,11 +70,17 @@ app.controller('HomeSequenceCtrl', function($scope, $state){
 
 });
 
-app.controller('PhotoEventCtrl', function($scope, $window, socket, PhotoEventFactory, ipAddressFactory){
+app.controller('PhotoEventCtrl', function($scope, $rootScope, $window, socket, PhotoEventFactory, ipAddressFactory){
 
   $scope.data = {};
 
+  $scope.events = null;
+
   $scope.photoEvent = {inProgress: PhotoEventFactory.getStatus(), count: 0, currShow: PhotoEventFactory.getName()};
+
+  $rootScope.$on('photo event update', function(){
+    $scope.events = PhotoEventFactory.getList();
+  });
 
   $scope.getPhoto = function(){
     $scope.photoEvent.inProgress = true;
@@ -96,27 +102,19 @@ app.controller('PhotoEventCtrl', function($scope, $window, socket, PhotoEventFac
 
   };
 
-  $scope.viewPhotoShow = function(){
-    $window.open($scope.data.photoUrl, '_blank');
+  $scope.viewPhotoShow = function(showId){
+    $window.open(PhotoEventFactory.getById(showId).mosaicURL, '_blank');
   };
 
-  $scope.sendPhotoShow = function(){
-    socket.emit('admin command', { message: 'view photo event', params: { url: $scope.data.photoUrl } });
+  $scope.sendPhotoShow = function(showId){
+    socket.emit('admin command', { message: 'mosaic ready', params: PhotoEventFactory.getList() });
   };
 
   socket.on('photo added', function(data){
     $scope.photoEvent.count = data.count;
   });
 
-  socket.on('photo process done', function(data){
-    console.log('photo event', data);
-    // example package sent back [ { mosaicNum: 1, name: 'FunPhoto', mosaicURL: '/#photoMosaic/1' } ]
-    var photoIP = ipAddressFactory.getPhotoIP();
-    for (var i = 0; i < data.length; i++) {
-      data[i].mosaicURL = photoIP + data[i].mosaicURL;
-    }
-    $scope.data.mosaicInfo = data;
-  });
+
 });
 
 app.controller('MsgEventCtrl', function($scope, socket){
@@ -143,11 +141,14 @@ app.controller('ContestEventCtrl', function($scope, socket){
   });
 });
 
-app.controller('HomeOneShotCtrl', function($scope, socket, PhotoEventFactory, ipAddressFactory){
+app.controller('HomeOneShotCtrl', function($scope, $rootScope, PhotoEventFactory, ipAddressFactory){
 
   $scope.data = {};
 
   $scope.photoEvent = {inProgress: false, count: 0};
+
+  $scope.events = PhotoEventFactory.getList();
+
 
   $scope.sendMessage = function(){
     socket.emit('admin command', { message: 'send message', params: { text: $scope.data.message, duration: 4000 } });
