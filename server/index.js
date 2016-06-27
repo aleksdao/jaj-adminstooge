@@ -93,6 +93,12 @@ adminNsp.on('connection', function(socket){
     adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
   });
 
+  socket.on('refresh client list', function(){
+    //get any stragglers that mau have gotten here early
+    clientNsp.emit('get user info');
+
+  });
+
   socket.on('disconnect', function(){
     adminList.removeUser(socket.id);
   });
@@ -133,9 +139,11 @@ adminNsp.on('connection', function(socket){
 /// SETUP CLIENT SOCKETS ///
 clientNsp.on('connection', function(socket){
 
+  userList.addUser(socket.id);
+  adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
+
   socket.on('add user', function(userData){
     if(clientServerOnline){
-
       userList.addUser(socket.id, userData);
       //let the admin know!
       adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user

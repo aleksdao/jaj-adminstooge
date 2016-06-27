@@ -31,6 +31,10 @@ app.controller('ServerStatsCtrl', function($scope, $interval, ipAddressFactory, 
     });
   };
 
+  $scope.refreshClients = function(){
+    socket.emit('refresh client list');
+  };
+
   //new users have joined server, update list
   socket.on("admin updated client list", function(clientList){
     $scope.clientList = clientList;
