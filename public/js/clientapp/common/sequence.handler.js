@@ -1,4 +1,4 @@
-clientApp.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
+clientApp.factory('SequenceHandler', function($http, $rootScope, socket){
 
   var _sequence;
   var song;
@@ -105,16 +105,10 @@ clientApp.factory('SequenceHandler', function($http, $rootScope, socket, SongFac
     eventLoop: function(){
       //grab current time code position
       var currPos = Tone.Transport.position;
-      //start the audio?
-      if(currPos === '0:0:0'){
-        SongFactory.play();
-        $rootScope.$broadcast('show started');
-      }
 
-      console.log(currPos)
       //check to see if the show is over, if so, stop Transport
       if (currPos == _sequence.getShowLength()){
-        SongFactory.stop();
+        
         Tone.Transport.stop();
         Tone.Transport.position = 0;
         $rootScope.$broadcast('show ended');

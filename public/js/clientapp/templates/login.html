@@ -1,0 +1,19 @@
+
+
+<md-content>
+      <div class="hero no-header flat">
+          <div>
+              <div class="app-logo"><span>together</span></div>
+          </div>
+      </div>
+
+      <md-input-container>
+          <label>Your Name</label>
+          <input ng-model="data.name" type="text">
+      </md-input-container>
+      <div >
+          <md-button class="md-raised" ng-click="logIn()" ng-disabled="!data.name">Enter</md-button>
+      </div>
+
+
+  </md-content>

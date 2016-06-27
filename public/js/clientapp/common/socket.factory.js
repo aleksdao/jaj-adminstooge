@@ -1,4 +1,4 @@
-clientApp.factory('socket', function($rootScope){
+clientApp.factory('socket', function($rootScope, ipAddressFactory){
 
   var _socket; //holds our Socket
   var _serverLatency; //current roundtrip time to server
@@ -6,9 +6,10 @@ clientApp.factory('socket', function($rootScope){
 
   return {
 
-    connect: function(serverUrl){
-      _socket = io.connect(serverUrl); //connect to server
+    connect: function(serverUrl, namespace){
+      _socket = io.connect(serverUrl + namespace);
       this.ping(); //get the inital roundtrip time just in case it doesn't get called later on
+
     },
     on: function (eventName, callback) {
       _socket.on(eventName, function () {
@@ -37,7 +38,7 @@ clientApp.factory('socket', function($rootScope){
       });
     },
     startPingRepeat: function(interval){
-      interval = interval || 10000; //if no interval is passed, set to 10 seconds
+      interval = interval || 200; //if no interval is passed, set to 200 ms
 
       if(!_pingProcess)
         _pingProcess = setInterval(this.ping, interval);
@@ -48,6 +49,12 @@ clientApp.factory('socket', function($rootScope){
     },
     getLatency: function(){
       return _serverLatency;
+    },
+    connected: function(){
+      if(!_socket)
+        return false;
+
+      return _socket.connected;
     }
   };
 });

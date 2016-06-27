@@ -1,41 +1,47 @@
 <html lang="en">
 
 <head>
-    <title> Welcome to the Client Panel</title>
+    <title> together </title>
+
+    <!-- css -->
     <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css">
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,200' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/clientstyle.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 
+    <!-- app dependicies -->
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="/node_modules/angular/angular.js" defer></script>
-    <script src="/js/clientapp.js" defer></script>
-
     <script src="/node_modules/angular-ui-router/release/angular-ui-router.min.js" defer></script>
     <script src="/node_modules/tone/build/tone.js" defer></script>
-
     <script src="/node_modules/angular-aria/angular-aria.js" defer></script>
     <script src="/node_modules/angular-animate/angular-animate.js" defer></script>
     <script src="/node_modules/angular-material/angular-material.js" defer></script>
 
+    <!-- app js files -->
+    <script src="/js/clientapp/clientapp.js" defer></script>
     <script src="/js/clientapp/common/socket.factory.js" defer></script>
     <script src="/js/clientapp/common/ipAddress.Factory.js" defer></script>
     <script src="/js/clientapp/common/sequence.handler.js" defer></script>
 
-    <!-- <base href="/"> -->
+    <script src="js/clientapp/controllers/LoginController.js" defer></script>
+    <script src="js/clientapp/controllers/show.Controller.js" defer></script>
+    <script src="js/clientapp/controllers/camera.Controller.js" defer></script>
+    <script src="js/clientapp/controllers/staging.controller.js" defer></script>
+    <script src="js/clientapp/controllers/settings.controller.js" defer></script>
+    <script src="js/clientapp/controllers/contest.controller.js" defer></script>
+    <script src="js/clientapp/controllers/error.controller.js" defer></script>
+
+    <base href="/">
 </head>
 
 <body ng-app="together-client">
-    <div class="container">
-        <h1>Client Test</h1>
+    <div>
+        <ui-view></ui-view>
 
-        {{ 1 }}
 
     </div>
 </body>
-
-
-
 </html>

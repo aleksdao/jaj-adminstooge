@@ -1,28 +1,75 @@
-var clientApp = angular.module('together-client', ['ui.router','ngMaterial'])
-
-console.log(clientApp)
+var clientApp = angular.module('together-client', ['ui.router', 'ngMaterial'])
 
 clientApp.config(function ($urlRouterProvider, $locationProvider, $mdThemingProvider) {
 
-    // // This turns off hashbang urls (/#about) and changes it to something normal (/about)
-    // $locationProvider.html5Mode(true);
-    // // If we go to a URL that ui-router doesn't have registered, go to the "/admin" url.
-    // $urlRouterProvider.otherwise('/app');
+    // This turns off hashbang urls (/#about) and changes it to something normal (/about)
+    $locationProvider.html5Mode(true);
+
+    // If we go to a URL that ui-router doesn't have registered, go to the "/app" url.
+    $urlRouterProvider.otherwise('/app');
+
+    $mdThemingProvider.theme('default')
+     .primaryPalette('grey')
+     .accentPalette('teal', {
+       default:'A400'
+     })
+     .dark();
+
+
 
 
 });
 
-// var socket = io.connect('/client');
-//
-// var userName = 'User' + Math.floor(Math.random()*1000);
-//
-// socket.emit('add user', {name: userName});
-//
-// socket.on('get user info', function(){
-//   socket.emit('add user', {name: userName});
-// });
-//
-// socket.on('connection closed', function(){
-//   console.log('shut it down')
-//   socket.emit('remove user', {name: userName});
-// });
+clientApp.config(function ($stateProvider, $urlRouterProvider) {
+  $stateProvider
+  .state('app', {
+    url: '/app',
+    templateUrl: 'js/clientapp/templates/errorPage.html',
+    controller: 'ErrorController'
+  })
+    .state('login', {
+      url: '/app/login',
+      templateUrl: 'js/clientapp/templates/login.html',
+      controller: 'LoginController'
+    })
+    .state('showPage', {
+      url: '/app/showPage',
+      templateUrl: 'js/clientapp/templates/showPage.html',
+      controller: 'ShowController'
+    })
+    .state('stagingPage', {
+      url: '/app/stagingPage',
+      templateUrl: 'js/clientapp/templates/stagingPage.html',
+      controller: 'StagingController'
+    })
+    .state('errorPage', {
+      url: '/app/errorPage',
+      templateUrl: 'js/clientapp/templates/errorPage.html',
+      controller: 'ErrorController'
+    })
+    .state('contestPage', {
+      url: '/app/contestPage',
+      templateUrl: 'js/clientapp/templates/contestPage.html',
+      controller: 'ContestController',
+      params:{
+        message: null
+      }
+    })
+    .state('settingsPage', {
+      url: '/app/settingsPage',
+      templateUrl: 'js/clientapp/templates/settings.html',
+      controller: 'SettingsController'
+    });
+
+});
+
+clientApp.run(function($state, ipAddressFactory, socket){
+  /// init server connection ///
+ ipAddressFactory.fetchIpAddresses()
+ .then(function(){
+   //connect to client socket
+   socket.connect(ipAddressFactory.getSocketIP(), '/client');
+
+   socket.startPingRepeat(100);
+ });
+});
