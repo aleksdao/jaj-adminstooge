@@ -27,7 +27,7 @@ clientApp.factory('SequenceHandler', function($http, $rootScope, socket){
   function fadeColorTo(params, duration){
     // setTransitionTime(transitionTime);
     // _screenElement.container.css("background-color", params.color);
-    Velocity(_screenElement.container, {'backgroundColor': params.color}, params.duration);
+    Velocity(_screenElement.container, {'backgroundColor': params.color});
 
   }
   function changeText(params){

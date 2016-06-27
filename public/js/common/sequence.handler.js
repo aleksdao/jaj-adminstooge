@@ -24,7 +24,7 @@ app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
     _screenElement.container.css("background-color", params.color);
   }
   function fadeColorTo(params, duration){
-    setTransitionTime(transitionTime);
+    setTransitionTime(0);
     _screenElement.container.css("background-color", params.color);
   }
   function changeText(params){
