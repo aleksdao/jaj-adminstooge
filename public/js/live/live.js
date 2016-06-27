@@ -14,7 +14,7 @@ app.config(function ($stateProvider) {
 
 /// sample show
 var sampleShow = {
-  show_length:'25:0:0',
+  show_length:'14:0:0',
   name: 'Together Demo - Wander by Startank',
   settings:{
     bpm: 83,

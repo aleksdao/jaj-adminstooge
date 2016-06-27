@@ -33,6 +33,11 @@ app.use('/stylesheets', express.static(path.join(__dirname, '../public/styleshee
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 
 /// MAIN ROUTE ///
+
+app.get('/app', function (req, res){
+  res.sendFile(path.join(__dirname, '../public/client.html'));
+});
+
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
