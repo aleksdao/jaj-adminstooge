@@ -8,6 +8,12 @@ clientApp.config(function ($urlRouterProvider, $locationProvider, $mdThemingProv
     // If we go to a URL that ui-router doesn't have registered, go to the "/app" url.
     $urlRouterProvider.otherwise('/app');
 
+    $mdThemingProvider.theme('default')
+     .primaryPalette('grey')
+     .accentPalette('teal', {
+       default:'A400'
+     });
+
      //set up toast anims
      ngToastProvider.configure({
        animation: 'fade' // or 'fade'
@@ -74,7 +80,5 @@ clientApp.run(function($state, ipAddressFactory, socket){
   StartAudioContext.setContext(Tone.context);
   var elem = document.getElementById('#mainapp');
   StartAudioContext.on(elem);
-
-
-
+  
 });

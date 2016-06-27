@@ -29,6 +29,7 @@ server.listen(3000, function(){
 /// SETUP ROUTES ///
 app.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));
+app.use('/img', express.static(path.join(__dirname, '../public/img')));
 app.use('/stylesheets', express.static(path.join(__dirname, '../public/stylesheets')));
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 
