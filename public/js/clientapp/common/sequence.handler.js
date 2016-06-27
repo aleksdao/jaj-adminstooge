@@ -20,12 +20,15 @@ clientApp.factory('SequenceHandler', function($http, $rootScope, socket){
 
   /////// Event Action Functions //////
   function changeColor(params){
-    setTransitionTime(0);
-    _screenElement.container.css("background-color", params.color);
+    // setTransitionTime(0);
+    // _screenElement.container.css("background-color", params.color);
+    Velocity(_screenElement.container, {'backgroundColor': params.color}, 0);
   }
   function fadeColorTo(params, duration){
-    setTransitionTime(transitionTime);
-    _screenElement.container.css("background-color", params.color);
+    // setTransitionTime(transitionTime);
+    // _screenElement.container.css("background-color", params.color);
+    Velocity(_screenElement.container, {'backgroundColor': params.color}, params.duration);
+
   }
   function changeText(params){
     _screenElement[params.target].text(params.text);
@@ -53,10 +56,11 @@ clientApp.factory('SequenceHandler', function($http, $rootScope, socket){
 
   return {
     init: function(screenElement){
-      _screenElement.container = angular.element(document.querySelector(screenElement.container));
-      _screenElement.title = angular.element(document.querySelector(screenElement.title));
-      _screenElement.body = angular.element(document.querySelector(screenElement.body));
+      _screenElement.container = angular.element(document.querySelectorAll(screenElement.container));
+      _screenElement.title = angular.element(document.querySelectorAll(screenElement.title));
+      _screenElement.body = angular.element(document.querySelectorAll(screenElement.body));
 
+      console.log(screenElement, _screenElement);
     },
     loadSequence: function(sequence){
       //set Transport settings (tempo, time sig, etc)
@@ -108,7 +112,7 @@ clientApp.factory('SequenceHandler', function($http, $rootScope, socket){
 
       //check to see if the show is over, if so, stop Transport
       if (currPos == _sequence.getShowLength()){
-        
+
         Tone.Transport.stop();
         Tone.Transport.position = 0;
         $rootScope.$broadcast('show ended');
