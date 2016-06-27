@@ -1,18 +1,8 @@
-  <ion-view>
-    <ion-content id="stagingPage">
-      <div>
-        <p class="center-message"> Connected to the show... </p>
-      </div>
-      <div style="margin-top:300px" layout="column">
-        <button class="button button-stable ink" ui -sref="settingsPage">settings</button>
-        <button class="button button-balanced" ng-show="isLoggedIntoTwitter" ng-click="postStatusUpdate()">
-          {{messageStatus}}
-        </button>
-      </div>
-    </ion-content>
-  </ion-view>
+<toast></toast>
 
-  <!-- keep this comment for now -->
-  <!-- <a class="item" href="#" onclick="window.open('http://192.168.2.54:5000', '_blank', 'location=yes'); return false;">
-                  Open a Browser {{photoIP}}
-              </a> -->
+<div>
+    <p class="center-message"> Connected to the show... </p>
+</div>
+
+
+<md-button class="md-raised" ui-sref="settingsPage">settings</md-button>

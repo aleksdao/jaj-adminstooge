@@ -1,4 +1,4 @@
-@font-face {
+/*@font-face {
     font-family: 'RalewayLight';
     src: url('fonts/RalewayLight.eot');
     src: url('fonts/RalewayLight.eot') format('embedded-opentype'),
@@ -10,10 +10,18 @@
 
 body {
   font-family: 'RalewayLight';
+}*/
+
+body {
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #b4afb2;
+
 }
 
 #showPage {
-  background-color: #010101;
   text-align: center;
   width: 100%;
   height: 100%;

@@ -1,4 +1,6 @@
-clientApp.controller('StagingController', function ($scope, $state, socket, SequenceHandler, $timeout) {
+clientApp.controller('StagingController', function ($scope, $state, socket, ngToast, SequenceHandler, $timeout) {
+
+  $scope.context = Tone.context.state;
 
   SequenceHandler.init({
       container: '#showPage',
@@ -18,16 +20,8 @@ clientApp.controller('StagingController', function ($scope, $state, socket, Sequ
 
   socket.on('send message', function(data){
     if(SequenceHandler.getTransportState() === 'stopped'){
-
-      window.plugins.toast.showWithOptions({
-        message: data.text,
-        duration: data.duration, // 2000 ms
-        position: "center",
-        styling: {
-            textSize: 30 // Default is approx. 13.
-            }
-      });
-
+      console.log('data', data.text)
+      ngToast.create(data.text);
     }
 
   });

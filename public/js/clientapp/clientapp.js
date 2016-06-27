@@ -1,6 +1,6 @@
-var clientApp = angular.module('together-client', ['ui.router', 'ngMaterial'])
+var clientApp = angular.module('together-client', ['ui.router', 'ngMaterial', 'ngToast'])
 
-clientApp.config(function ($urlRouterProvider, $locationProvider, $mdThemingProvider) {
+clientApp.config(function ($urlRouterProvider, $locationProvider, $mdThemingProvider, ngToastProvider) {
 
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
     $locationProvider.html5Mode(true);
@@ -8,14 +8,10 @@ clientApp.config(function ($urlRouterProvider, $locationProvider, $mdThemingProv
     // If we go to a URL that ui-router doesn't have registered, go to the "/app" url.
     $urlRouterProvider.otherwise('/app');
 
-    $mdThemingProvider.theme('default')
-     .primaryPalette('grey')
-     .accentPalette('teal', {
-       default:'A400'
-     })
-     .dark();
-
-
+     //set up toast anims
+     ngToastProvider.configure({
+       animation: 'fade' // or 'fade'
+     });
 
 
 });
@@ -64,6 +60,7 @@ clientApp.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 clientApp.run(function($state, ipAddressFactory, socket){
+
   /// init server connection ///
  ipAddressFactory.fetchIpAddresses()
  .then(function(){
@@ -72,4 +69,12 @@ clientApp.run(function($state, ipAddressFactory, socket){
 
    socket.startPingRepeat(100);
  });
+
+ //pass in the audio context
+  StartAudioContext.setContext(Tone.context);
+  var elem = document.getElementById('#mainapp');
+  StartAudioContext.on(elem);
+
+
+
 });

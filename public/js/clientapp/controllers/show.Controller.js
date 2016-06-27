@@ -1,4 +1,6 @@
-clientApp.controller('ShowController', function ($scope, $state, socket, SequenceHandler) {
+clientApp.controller('ShowController', function ($scope, $rootScope, $state, socket, SequenceHandler) {
+
+  $scope.context = Tone.context.state;
 
   SequenceHandler.init({
       container: '#showPage',
@@ -12,6 +14,10 @@ clientApp.controller('ShowController', function ($scope, $state, socket, Sequenc
       //play the sequence
       SequenceHandler.queueStart(data.startTime, true);
     }
+  });
+
+  $rootScope.$on('show ended', function(){
+    $state.go('stagingPage');
   });
 
 });
