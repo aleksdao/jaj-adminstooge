@@ -12,7 +12,8 @@ clientApp.config(function ($urlRouterProvider, $locationProvider, $mdThemingProv
      .primaryPalette('grey')
      .accentPalette('teal', {
        default:'A400'
-     });
+     })
+     .dark();
 
      //set up toast anims
      ngToastProvider.configure({
@@ -78,7 +79,7 @@ clientApp.run(function($state, ipAddressFactory, socket){
 
  //pass in the audio context
   StartAudioContext.setContext(Tone.context);
-  var elem = document.getElementById('#mainapp');
+  var elem = document.getElementById('mainapp');
   StartAudioContext.on(elem);
-  
+
 });

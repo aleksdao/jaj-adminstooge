@@ -1,36 +1,68 @@
-/*@font-face {
+@font-face {
     font-family: 'RalewayLight';
-    src: url('fonts/RalewayLight.eot');
-    src: url('fonts/RalewayLight.eot') format('embedded-opentype'),
-         url('fonts/RalewayLight.woff2') format('woff2'),
-         url('fonts/RalewayLight.woff') format('woff'),
-         url('fonts/RalewayLight.ttf') format('truetype'),
-         url('fonts/RalewayLight.svg#RalewayLight') format('svg');
+    src: url('../js/fonts/RalewayLight.eot');
+    src: url('../js/fonts/RalewayLight.eot') format('embedded-opentype'),
+         url('../js/fonts/RalewayLight.woff2') format('woff2'),
+         url('../js/fonts/RalewayLight.woff') format('woff'),
+         url('../js/fonts/RalewayLight.ttf') format('truetype'),
+         url('../js/fonts/RalewayLight.svg#RalewayLight') format('svg');
 }
 
 body {
   font-family: 'RalewayLight';
-}*/
+}
+
+html, body {
+    		height: 100%;
+    		margin: 0 auto;
+        padding: 0;
+    	}
+
 
 body {
-  margin: auto auto;
-  padding: 0;
-  background: url('../img/main_bg.png') center;
-  background-size: cover;
-  background-color:transparent;
-  text: white;
+  color: white;
 }
 
 #mainapp {
-
-}
-#loginPage {
-
-
-}
-
-#showPage {
+  min-height: 100%;
+  background-color: #1d1d1d;
   text-align: center;
-  width: 100%;
-  height: 100%;
+}
+.bgPicPage {
+  background: url('../img/main_bg.png') center;
+  background-size: cover;
+}
+
+#showPage, #stagingPage {
+  text-align: center;
+  min-height: 100%;
+  min-width: 100%;
+  background-color: #1d1d1d;
+  padding: 0;
+}
+
+#showTitle {
+  padding-top: 100px;
+  font-family: 'RalewayLight'
+
+}
+
+#showBody {
+  margin-top: 90px;
+  font-family: 'RalewayLight'
+
+}
+
+.app-logo {
+  margin-top: 100px;
+  font-size: 80px;
+  color: white;
+  font-family: 'RalewayLight'
+}
+
+.center-message{
+  font-size: 25px;
+  margin-top: 200px;
+  color: white;
+  font-family: 'RalewayLight'
 }
