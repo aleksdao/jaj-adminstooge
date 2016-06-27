@@ -21,7 +21,7 @@ app.run(function(socket, ipAddressFactory){
 
   /// init admin socket connection ///
   socket.connect('/admin');
-  socket.startPingRepeat(200);
+  socket.startPingRepeat(100);
   socket.emit('add admin', 'Admin');
   socket.emit('get client list');
 });
