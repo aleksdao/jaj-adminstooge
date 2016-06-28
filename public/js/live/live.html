@@ -36,9 +36,7 @@
   <div flex="33" ng-show="data.ready">
     <h1 class="md-title"> Staging </h1>
     <p>Current Show: {{ currentShow.name }}</p>
-
-    <p>Transport State: {{ transportState }}</p>
-
+    
     <div ng-show="transportState==='started'">
       <md-button ng-click="stopShow()" class="md-fab md-warn">
         <md-icon md-font-set="material-icons"> stop </md-icon>
