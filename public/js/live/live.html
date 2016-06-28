@@ -39,9 +39,16 @@
 
     <p>Transport State: {{ transportState }}</p>
 
-    <md-button ng-disabled="!data.startTime" ng-click="startShow()"class="md-fab">
-      <md-icon md-font-set="material-icons"> play_arrow </md-icon>
-    </md-button>
+    <div ng-show="transportState==='started'">
+      <md-button ng-click="stopShow()" class="md-fab md-warn">
+        <md-icon md-font-set="material-icons"> stop </md-icon>
+      </md-button>
+    </div>
+    <div ng-show="transportState==='stopped'">
+      <md-button ng-disabled="!data.startTime" ng-click="startShow()"class="md-fab">
+        <md-icon md-font-set="material-icons"> play_arrow </md-icon>
+      </md-button>
+    </div>
 
   </div>
   <div flex="33" ng-show="data.ready">

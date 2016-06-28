@@ -37,6 +37,22 @@ app.config(function ($stateProvider) {
 
           }
 
-        }
+        },
+
     });
+});
+app.controller('SidebarCtrl', function($rootScope, $scope, SequenceHandler){
+  $scope.isPlaying = false;
+  console.log($scope.isPlaying)
+  $rootScope.$on('show started', function(){
+    $scope.isPlaying = true;
+    console.log($scope.isPlaying)
+
+  });
+
+  $rootScope.$on('show ended', function(){
+    $scope.isPlaying = false;
+    console.log($scope.isPlaying)
+
+  });
 });

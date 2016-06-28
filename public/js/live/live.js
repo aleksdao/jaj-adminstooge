@@ -107,6 +107,13 @@ app.controller('LiveCtrl', function($scope, $timeout, $rootScope, socket, Sequen
     socket.emit('admin command', {message: 'play', params:{ startTime: $scope.data.startTime * 1000, sequence: $scope.currentShow } });
   };
 
+  $scope.stopShow = function(){
+    SongFactory.stop();
+    Tone.Transport.stop();
+    Tone.Transport.position = 0;
+    $rootScope.$broadcast('show ended');
+  }
+
   $scope.loadShow = function(){
     //grab show from list
     var newShow = $scope.showList[$scope.data.toLoad];
