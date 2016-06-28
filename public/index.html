@@ -36,17 +36,18 @@
 
 <div flex layout="row">
 
-<md-sidenav layout="column" class="sidenav1" md-is-locked-open='true'>
+<div ng-controller="SidebarCtrl">
+<md-sidenav layout="column" class="sidenav1" md-is-locked-open='true' >
   <h1 ui-sref="home" class="logo">together</h1>
 
   <md-button class="md-raised" ui-sref="livemode" ui-sref-active="md-accent"> Live Mode </md-button>
-  <md-button class="md-raised" ui-sref="oneshot" ui-sref-active="md-accent"> One-Shot </md-button>
+  <md-button class="md-raised" ng-disabled="isPlaying" ui-sref="oneshot" ui-sref-active="md-accent"> One-Shot </md-button>
 
   <br/><br/>
   <server-stats></server-stats>
 
   </md-sidenav>
-
+</div>
  <md-content flex layout="column">
    <ui-view></ui-view>
  </md-content>

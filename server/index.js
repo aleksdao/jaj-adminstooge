@@ -29,10 +29,19 @@ server.listen(3000, function(){
 /// SETUP ROUTES ///
 app.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));
+app.use('/img', express.static(path.join(__dirname, '../public/img')));
 app.use('/stylesheets', express.static(path.join(__dirname, '../public/stylesheets')));
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 
 /// MAIN ROUTE ///
+
+app.get('/app', function (req, res){
+  res.sendFile(path.join(__dirname, '../public/client.html'));
+});
+app.get('/app/*', function (req, res){
+  res.sendFile(path.join(__dirname, '../public/client.html'));
+});
+
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
@@ -84,6 +93,12 @@ adminNsp.on('connection', function(socket){
     adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
   });
 
+  socket.on('refresh client list', function(){
+    //get any stragglers that mau have gotten here early
+    clientNsp.emit('get user info');
+
+  });
+
   socket.on('disconnect', function(){
     adminList.removeUser(socket.id);
   });
@@ -124,9 +139,11 @@ adminNsp.on('connection', function(socket){
 /// SETUP CLIENT SOCKETS ///
 clientNsp.on('connection', function(socket){
 
+  userList.addUser(socket.id);
+  adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user
+
   socket.on('add user', function(userData){
     if(clientServerOnline){
-
       userList.addUser(socket.id, userData);
       //let the admin know!
       adminNsp.emit('admin updated client list', userList.getList()); //send list to Admin user

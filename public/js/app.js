@@ -21,7 +21,7 @@ app.run(function(socket, ipAddressFactory){
 
   /// init admin socket connection ///
   socket.connect('/admin');
-  socket.startPingRepeat(200);
+  socket.startPingRepeat(100);
   socket.emit('add admin', 'Admin');
   socket.emit('get client list');
 });
@@ -37,6 +37,22 @@ app.config(function ($stateProvider) {
 
           }
 
-        }
+        },
+
     });
+});
+app.controller('SidebarCtrl', function($rootScope, $scope, SequenceHandler){
+  $scope.isPlaying = false;
+  console.log($scope.isPlaying)
+  $rootScope.$on('show started', function(){
+    $scope.isPlaying = true;
+    console.log($scope.isPlaying)
+
+  });
+
+  $rootScope.$on('show ended', function(){
+    $scope.isPlaying = false;
+    console.log($scope.isPlaying)
+
+  });
 });

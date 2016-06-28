@@ -1,4 +1,4 @@
-app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
+clientApp.factory('SequenceHandler', function($http, $rootScope, socket){
 
   var _sequence;
   var song;
@@ -22,10 +22,14 @@ app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
   function changeColor(params){
     setTransitionTime(0);
     _screenElement.container.css("background-color", params.color);
+    Velocity(_screenElement.container, {'backgroundColor': params.color}, 0);
   }
   function fadeColorTo(params, duration){
     setTransitionTime(0);
+    console.log(transitionTime)
     _screenElement.container.css("background-color", params.color);
+    // Velocity(_screenElement.container, {'backgroundColor': params.color});
+
   }
   function changeText(params){
     _screenElement[params.target].text(params.text);
@@ -53,10 +57,11 @@ app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
 
   return {
     init: function(screenElement){
-      _screenElement.container = angular.element(document.querySelector(screenElement.container));
-      _screenElement.title = angular.element(document.querySelector(screenElement.title));
-      _screenElement.body = angular.element(document.querySelector(screenElement.body));
+      _screenElement.container = angular.element(document.querySelectorAll(screenElement.container));
+      _screenElement.title = angular.element(document.querySelectorAll(screenElement.title));
+      _screenElement.body = angular.element(document.querySelectorAll(screenElement.body));
 
+      console.log(screenElement, _screenElement);
     },
     loadSequence: function(sequence){
       //set Transport settings (tempo, time sig, etc)
@@ -105,14 +110,10 @@ app.factory('SequenceHandler', function($http, $rootScope, socket, SongFactory){
     eventLoop: function(){
       //grab current time code position
       var currPos = Tone.Transport.position;
-      //start the audio?
-      if(currPos === '0:0:0'){
-        SongFactory.play();
-        $rootScope.$broadcast('show started');
-      }
+
       //check to see if the show is over, if so, stop Transport
       if (currPos == _sequence.getShowLength()){
-        SongFactory.stop();
+
         Tone.Transport.stop();
         Tone.Transport.position = 0;
         $rootScope.$broadcast('show ended');

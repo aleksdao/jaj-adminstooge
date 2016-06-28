@@ -6,11 +6,15 @@ function SocketList(maxConnections){
 
 SocketList.prototype.addUser = function(socketId, data){
 
-  if(!this.inList(socketId) && this._socketList.length <= this.maxConnections){
+  var idx = this.inList(socketId);
+
+  if(idx === -1 && this._socketList.length <= this.maxConnections){
     this._socketList.push({id: socketId, userData: data});
     return true;
-  }
-  else
+  } else if(idx > -1 && this._socketList.length <= this.maxConnections){
+    this._socketList[idx].userData = data;
+    return true;
+  } else
     return false;
 };
 
@@ -29,8 +33,10 @@ SocketList.prototype.inList = function(socketId){
   idx = this._socketList.findIndex(function(user){
     return user.id == socketId;
   });
-  return idx > -1;
+  return idx;
 };
+
+
 
 SocketList.prototype.getList = function(){
   return this._socketList;
