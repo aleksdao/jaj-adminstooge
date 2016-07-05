@@ -62,6 +62,14 @@ clientApp.config(function ($stateProvider, $urlRouterProvider) {
       url: '/app/settingsPage',
       templateUrl: 'js/clientapp/templates/settings.html',
       controller: 'SettingsController'
+    })
+    .state('mosaicsPage', {
+      url: '/app/mosaicsPage',
+      templateUrl: 'js/clientapp/templates/mosaicsPage.html',
+      controller: 'MosaicsController',
+      params: {
+        data: null
+      }
     });
 
 });

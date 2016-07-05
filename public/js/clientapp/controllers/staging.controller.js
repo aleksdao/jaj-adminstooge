@@ -18,6 +18,12 @@ clientApp.controller('StagingController', function ($scope, $state, socket, ngTo
     $state.go('contestPage', { message: data });
   });
 
+  socket.on('mosaic ready', function(data){
+    if(SequenceHandler.getTransportState() === 'stopped'){
+      $state.go('mosaicsPage', {data: data});
+    }//end if
+  });
+
   socket.on('send message', function(data){
     if(SequenceHandler.getTransportState() === 'stopped'){
       console.log('data', data.text)

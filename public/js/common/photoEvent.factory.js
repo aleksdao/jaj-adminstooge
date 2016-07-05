@@ -38,6 +38,7 @@ app.factory('PhotoEventFactory', function($http, $rootScope, ipAddressFactory, s
 
     },
     processPhotoEvent: function(){
+      inProgress = false;
 
       return $http.post(ipAddressFactory.getPhotoIP()+'/api/photo/processPhotoShow', {token: 'bootsNCats'})
       .then(function(res){

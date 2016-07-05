@@ -1,0 +1,13 @@
+
+<div>
+  <p class="center-message"> Checkout these mosaics... </p>
+</div>
+<div style="margin-top:100px" layout="column">
+
+  <ul class="container">
+      <md-button ng-repeat="mosaic in mosaicName_URL" class="md-raised md-accent" ng-click="openMosaic(mosaic.mosaicURL)">
+        {{ mosaic.name }}
+      </md-button>
+  </ul>
+
+</div>

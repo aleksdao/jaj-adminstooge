@@ -1,7 +1,29 @@
 pass out devices
 Everyone log in (with devices, connect via the website)
-do photo event
-send a message
-do a contest
-do a show
-show mosaic
+
+
+Photo Event:
+ - Admin starts photo event
+ - Clients take pictures and upload
+ - Photos come into Admin view, then admin triggers processing
+ - Admin sends mosaic to clients, open mosaic
+ 
+Send Message:
+- Admin writes message, then sends
+- Clients get message on screen (show a few screens)
+
+Contest:
+- Admin writes winner message, then sends
+- One Client gets winning message on screen
+
+Show Editor
+- Create Show
+- Load Audio File
+- Add a few events
+- Save
+
+Run a Live Show
+- Admin picks a show and queues it up
+- Show Client getting queued
+- Admin starts the show
+- Show Side-by-side clients and admin running show
